@@ -38,7 +38,7 @@ export default {
   },
    methods: {
      addContact(contactInfo) {
-       this.$refs.contacts.test(contactInfo);
+       this.$refs.contacts.addContact(contactInfo);
      }
    }
 }

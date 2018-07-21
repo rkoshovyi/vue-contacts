@@ -2,7 +2,7 @@
 <div class="contacts-list-wrapper">
   <ul class="contacts-list">
     <li class="contact"
-        v-for="contact in contacts"
+        v-for="contact in contactsList"
         ref="contacts" >
       <div class="contact-image">
         <img src="../assets/no-avatar.jpg"/>
@@ -29,29 +29,28 @@ export default {
   name: 'Contacts',
   data() {
     return {
-      contacts: [
-        {
-          name: 'Иван',
-          number: '123'
-        },
-        {
-          name: 'Петро',
-          number: '456'
-        },
-        {
-          name: 'Дмитро',
-          number: '789'
-        },
-        {
-          name: 'ПАНТЕЛЕЙМОН!',
-          number: '789'
-        }
-      ]
+      contact: {
+        name: '',
+        number: ''
+      },
+      contactsList: []
     }
   },
+  mounted() {
+    this.getContacts();
+  },
   methods: {
-    test(contactInfo) {
-      this.contacts.push({name: contactInfo[0], number: contactInfo[1]});
+    addContact(contactInfo) {
+      this.contactsList.push({name: contactInfo[0], number: contactInfo[1]});
+      localStorage.setItem('contacts', JSON.stringify(this.contactsList));
+    },
+    
+    getContacts() {
+      var contactsLocal = JSON.parse(localStorage.getItem('contacts') || '[]');
+
+      for (let i = 0; i < contactsLocal.length; i++) {
+        this.contactsList.push(contactsLocal[i]);
+      }
     }
   }
 }
@@ -66,7 +65,7 @@ export default {
 
   .contacts-list {
     width: 100%;
-    max-height: 500px;
+    height: 420px;
     padding: 10px;
     border-radius: 10px;
     border: 1px solid #ccc;
