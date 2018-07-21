@@ -18,12 +18,15 @@
         </div>
       </div>
 
-      <div class="delete-contact"
+      <div class="delete-button contact-button"
            @click="deleteContact(contact)">+</div>
+
+      <div class="edit-button contact-button"
+           @click="$emit('edit-contact-show', [contact, contactsList.indexOf(contact)])">edit</div>
     </li>
   </ul>
 
-  <div class="add-contact-button" @click="$emit('modal-show')">+</div>
+  <div class="add-contact-button" @click="$emit('add-contact-show')">+</div>
 </div>
 </template>
 
@@ -50,6 +53,11 @@ export default {
     addContact(contactInfoObject) {
       this.contactsList.push(contactInfoObject);
       this.saveContactsList();
+    },
+
+    editContact(newContactInfoObject, index) {
+      this.contactsList[index].name = newContactInfoObject.name;
+      this.contactsList[index].number = newContactInfoObject.number;
     },
 
     getContacts() {
@@ -117,22 +125,32 @@ export default {
       }
     }
 
-    .delete-contact {
+    .contact-button {
       position: absolute;
-      top: 5px;
-      right: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 20px;
-      height: 20px;
       background-color: #fff;
       cursor: pointer;
       border: 1px solid #ccc;
+    }
+
+    .delete-button {
+      top: 5px;
+      right: 5px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       font-size: 20px;
       font-weight: 700;
       transform: rotate(45deg);
+    }
+
+    .edit-button {
+      right: 5px;
+      bottom: 5px;
+      padding: 0 5px;
+      border-radius: 5px;
     }
   }
 

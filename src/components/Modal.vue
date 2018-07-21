@@ -1,9 +1,9 @@
 <template lang="html">
 <div class="modal-body">
   <div class="modal-close"
-       @click="$emit('modal-close')">+</div>
+       @click="$emit('modal-hide')">+</div>
 
-  <form>
+  <form v-show="addContactShowBool">
     <div class="contact-image">
       <img src="../assets/no-avatar.jpg"/>
     </div>
@@ -18,7 +18,28 @@
       </div>
       <div class="modal-input">
         <input type="submit"
-               @click="$emit('add-contact', [nameInput, phoneInput]), clearInputs(), $emit('modal-close')"
+               @click="$emit('add-contact', [nameInput, phoneInput]), clearInputs(), $emit('modal-hide')"
+               @click.prevent.self>
+      </div>
+    </div>
+  </form>
+
+  <form v-show="editContactShowBool">
+    <div class="contact-image">
+      <img src="../assets/no-avatar.jpg"/>
+    </div>
+    <div class="modal-edit-inputs">
+      <div class="modal-input">
+        <input type="text"
+               v-model="nameInput">
+      </div>
+      <div class="modal-input">
+        <input type="text"
+               v-model="phoneInput">
+      </div>
+      <div class="modal-input">
+        <input type="submit"
+               @click="$emit('edit-contact', [nameInput, phoneInput, indexOfEdit]), clearInputs(), $emit('modal-hide')"
                @click.prevent.self>
       </div>
     </div>
@@ -28,17 +49,40 @@
 
 <script>
 export default {
-  name: 'EditModal',
+  name: 'Modal',
   data() {
     return {
       nameInput: '',
-      phoneInput: ''
+      phoneInput: '',
+      addContactShowBool: false,
+      editContactShowBool: false,
+      indexOfEdit: ''
     }
   },
   methods: {
     clearInputs() {
       this.nameInput = '';
       this.phoneInput = '';
+    },
+
+    addContactShow() {
+      this.addContactShowBool = true;
+      this.editContactShowBool = false;
+    },
+
+    editContactShow(contactInfoObject, index) {
+      this.editContactShowBool = true;
+      this.addContactShowBool = false;
+
+      this.indexOfEdit = index;
+
+      this.nameInput = contactInfoObject.name;
+      this.phoneInput = contactInfoObject.number;
+    },
+
+    hideModals() {
+      this.addContactShowBool = false;
+      this.editContactShowBool = false;
     }
   }
 }
