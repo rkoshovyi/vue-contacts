@@ -38,7 +38,11 @@ export default {
   },
    methods: {
      addContact(contactInfo) {
-       this.$refs.contacts.addContact(contactInfo);
+       var contactInfoObject = {
+         name: contactInfo[0],
+         number: contactInfo[1]
+       }
+       this.$refs.contacts.addContact(contactInfoObject);
      }
    }
 }

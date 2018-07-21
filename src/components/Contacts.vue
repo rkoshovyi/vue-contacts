@@ -17,6 +17,9 @@
           {{ contact.number }}
         </div>
       </div>
+
+      <div class="delete-contact"
+           @click="deleteContact(contact)">+</div>
     </li>
   </ul>
 
@@ -40,17 +43,26 @@ export default {
     this.getContacts();
   },
   methods: {
-    addContact(contactInfo) {
-      this.contactsList.push({name: contactInfo[0], number: contactInfo[1]});
+    saveContactsList() {
       localStorage.setItem('contacts', JSON.stringify(this.contactsList));
     },
-    
+
+    addContact(contactInfoObject) {
+      this.contactsList.push(contactInfoObject);
+      this.saveContactsList();
+    },
+
     getContacts() {
       var contactsLocal = JSON.parse(localStorage.getItem('contacts') || '[]');
 
       for (let i = 0; i < contactsLocal.length; i++) {
         this.contactsList.push(contactsLocal[i]);
       }
+    },
+
+    deleteContact(contact) {
+      this.contactsList.splice(this.contactsList.indexOf(contact), 1);
+      this.saveContactsList();
     }
   }
 }
@@ -73,6 +85,7 @@ export default {
   }
 
   .contact {
+    position: relative;
     display: flex;
     margin-bottom: 10px;
     cursor: pointer;
@@ -102,6 +115,24 @@ export default {
       .contact-name {
         margin-bottom: 10px;
       }
+    }
+
+    .delete-contact {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background-color: #fff;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      font-size: 20px;
+      font-weight: 700;
+      transform: rotate(45deg);
     }
   }
 

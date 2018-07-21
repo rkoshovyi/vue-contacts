@@ -18,7 +18,7 @@
       </div>
       <div class="modal-input">
         <input type="submit"
-               @click="$emit('add-contact', [nameInput, phoneInput]), $emit('modal-close')"
+               @click="$emit('add-contact', [nameInput, phoneInput]), clearInputs(), $emit('modal-close')"
                @click.prevent.self>
       </div>
     </div>
@@ -36,9 +36,9 @@ export default {
     }
   },
   methods: {
-    logDatas() {
-      console.log(this.nameInput);
-      console.log(this.phoneInput)
+    clearInputs() {
+      this.nameInput = '';
+      this.phoneInput = '';
     }
   }
 }
