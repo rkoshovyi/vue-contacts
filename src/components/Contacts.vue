@@ -1,30 +1,60 @@
 <template>
 <div class="contacts-list-wrapper">
   <ul class="contacts-list">
-    <div v-if="contactsList.length" >
-      <li class="contact"
-          v-for="contact in contactsList"
-          ref="contacts" >
+    <div v-if="contactsList.length">
+      <li class="contact" v-for="contact in contactsList" ref="contacts">
         <div class="contact-image">
           <img v-if="contact.image" :src="contact.image">
-          <img v-else src="../assets/no-avatar.jpg"/>
+          <img v-else src="../assets/no-avatar.jpg" />
         </div>
 
         <div class="contact-info">
-          <div class="contact-name">
-            {{ contact.name }}
+          <div class="contact-info-row" v-show="contact.name">
+            <div class="contact-info-left">
+              Имя:
+            </div>
+            <div class="contact-info-item">
+              {{ contact.name }}
+            </div>
           </div>
 
-          <div class="contact-number">
-            {{ contact.number }}
+          <div class="contact-info-row" v-show="contact.phoneNumber">
+            <div class="contact-info-left">
+              Номер телефона:
+            </div>
+            <div class="contact-info-item">
+              {{ contact.phoneNumber }}
+            </div>
+          </div>
+
+          <div class="contact-info-row" v-show="contact.workNumber">
+            <div class="contact-info-left">
+              Рабочий номер:
+            </div>
+            <div class="contact-info-item">
+              {{ contact.workNumber }}
+            </div>
+          </div>
+
+
+          <div class="contact-info-row" v-show="contact.email">
+            <div class="contact-info-left">
+              Email:
+            </div>
+            <div class="contact-info-item">
+              {{ contact.email }}
+            </div>
           </div>
         </div>
 
-        <div class="delete-button contact-button"
-             @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
+        <div class="favorite-button contact-button" @click="isFavoriteChanging(contact)">
+          <i class="fas fa-star" v-if="contact.isFavorite"></i>
+          <i class="far fa-star" v-else></i>
+        </div>
 
-        <div class="edit-button contact-button"
-             @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
+        <div class="edit-button contact-button" @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
+
+        <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
       </li>
     </div>
     <p v-else style="text-align: center">Контактов нет</p>
@@ -41,8 +71,11 @@ export default {
     return {
       contact: {
         name: null,
-        number: null,
-        image: ''
+        phoneNumber: null,
+        workNumber: null,
+        email: null,
+        image: '',
+        isFavorite: false
       },
       contactsList: []
     }
@@ -62,7 +95,9 @@ export default {
 
     editContact(editableContactInfo, index) {
       this.contactsList[index].name = editableContactInfo.name;
-      this.contactsList[index].number = editableContactInfo.number;
+      this.contactsList[index].phoneNumber = editableContactInfo.phoneNumber;
+      this.contactsList[index].workNumber = editableContactInfo.workNumber;
+      this.contactsList[index].email = editableContactInfo.email;
       this.contactsList[index].image = editableContactInfo.image;
       this.saveContactsList();
     },
@@ -75,6 +110,12 @@ export default {
       }
     },
 
+    isFavoriteChanging(contact) {
+      let i = this.contactsList.indexOf(contact);
+
+      this.contactsList[i].isFavorite = !this.contactsList[i].isFavorite;
+    },
+
     deleteContact(contact) {
       this.contactsList.splice(this.contactsList.indexOf(contact), 1);
       this.saveContactsList();
@@ -84,84 +125,96 @@ export default {
 </script>
 
 <style lang="scss">
-
-  .contacts-list-wrapper {
+.contacts-list-wrapper {
     position: relative;
     width: 100%;
-  }
+}
 
-  .contacts-list {
+.contacts-list {
     width: 100%;
     height: 420px;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(#000, .25);
     overflow: auto;
-  }
+}
 
-  .contact {
+.contact {
     position: relative;
     display: flex;
-    margin-bottom: 10px;
+    padding: 10px 0;
     cursor: pointer;
+    border-bottom: 1px solid #ccc;
 
     &:last-child {
-      margin-bottom: 0;
+        border: none;
+        margin-bottom: 0;
     }
 
     .contact-image {
-      flex-shrink: 0;
-      width: 80px;
-      height: 80px;
-      margin-right: 20px;
-      border-radius: 10px;
-      overflow: hidden;
+        flex-shrink: 0;
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+        border-radius: 10px;
+        overflow: hidden;
 
-      img {
-        width: 100%;
-      }
+        img {
+            width: 100%;
+        }
     }
 
     .contact-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+        display: flex;
+        flex-direction: column;
 
-      .contact-name {
-        margin-bottom: 10px;
-      }
+        .contact-info-row {
+          display: flex;
+          margin-bottom: 10px;
+        }
+
+        .contact-info-left {
+          width: 140px;
+        }
+
+        .contact-info-item {
+        }
     }
 
     .contact-button {
-      position: absolute;
-      top: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
-      background-color: #fff;
-      cursor: pointer;
-      border: 1px solid #ccc;
-      border-radius: 50%;
-      font-size: 10px;
-      transition: .3s;
+        position: absolute;
+        top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        background-color: #fff;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        font-size: 10px;
+        transition: 0.3s;
 
-      &:hover {
-        transform: scale(1.1);
-      }
+        &.favorite-button {
+          right: 55px;
+        }
+
+        &.edit-button {
+            right: 30px;
+        }
+
+        &.delete-button {
+            right: 5px;
+        }
+
+        &:hover {
+            transform: scale(1.1);
+        }
     }
+}
 
-    .delete-button {
-      right: 5px;
-    }
-
-    .edit-button {
-      right: 30px;
-    }
-  }
-
-  .add-contact-button {
+.add-contact-button {
     position: absolute;
     right: 30px;
     bottom: 10px;
@@ -176,10 +229,10 @@ export default {
     border-radius: 50%;
     font-weight: 700;
     box-shadow: 0 0 10px rgba(#000, .25);
-    transition: .3s;
+    transition: 0.3s;
 
     &:hover {
-      transform: scale(1.05);
+        transform: scale(1.05);
     }
-  }
+}
 </style>

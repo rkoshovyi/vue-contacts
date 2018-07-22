@@ -77,6 +77,7 @@ export default {
   }
 
   body {
+    min-width: 320px;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
   }

@@ -23,12 +23,20 @@
 
     <div class="modal-edit-inputs">
       <div class="modal-input">
-        <input type="text"
+        <input type="text" placeholder="Имя"
                v-model="newContact.name">
       </div>
       <div class="modal-input">
-        <input type="text"
-               v-model="newContact.number">
+        <input type="text" placeholder="Номер телефона"
+               v-model="newContact.phoneNumber">
+      </div>
+      <div class="modal-input">
+        <input type="text" placeholder="Рабочий номер"
+               v-model="newContact.workNumber">
+      </div>
+      <div class="modal-input">
+        <input type="text" placeholder="Email"
+               v-model="newContact.email">
       </div>
       <div class="save-contact-button">
         <input type="submit" value="Добавить контакт"
@@ -51,18 +59,26 @@
           <label for="addUploadImage">Загрузить фото</label>
         </div>
         <div class="image-button" v-else>
-          <button @click="deleteImage" type="button">Удалить фото</button>          
+          <button @click="deleteImage" type="button">Удалить фото</button>
         </div>
       </div>
     </div>
     <div class="modal-edit-inputs">
       <div class="modal-input">
-        <input type="text"
+        <input type="text" placeholder="Имя"
                v-model="editableContact.name">
       </div>
       <div class="modal-input">
-        <input type="text"
-               v-model="editableContact.number">
+        <input type="text" placeholder="Номер телефона"
+               v-model="editableContact.phoneNumber">
+      </div>
+      <div class="modal-input">
+        <input type="text" placeholder="Рабочий телефон"
+               v-model="editableContact.workNumber">
+      </div>
+      <div class="modal-input">
+        <input type="text" placeholder="Email"
+               v-model="editableContact.email">
       </div>
       <div class="save-contact-button">
         <input type="submit" value="Сохранить контакт"
@@ -88,8 +104,11 @@ export default {
       indexOfEdit: '',
       newContact: {
         name: null,
-        number: null,
-        image: ''
+        phoneNumber: null,
+        workNumber: null,
+        email: null,
+        image: '',
+        isFavorite: false
       },
       editableContact: {}
     }
@@ -98,8 +117,11 @@ export default {
     clearInputs() {
       this.newContact = {
         name: null,
-        number: null,
-        image: ''
+        phoneNumber: null,
+        workNumber: null,
+        email: null,
+        image: '',
+        isFavorite: false
       }
     },
 
@@ -162,7 +184,7 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 100%;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -256,7 +278,7 @@ export default {
         transition: 0.3s;
 
         &:hover {
-            transform: scale(1.2);
+            color: red;
         }
     }
 }
