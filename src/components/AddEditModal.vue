@@ -1,9 +1,9 @@
 <template lang="html">
 <div class="modal-body">
   <div class="modal-close"
-       @click="$emit('modal-hide'), hideModals()">+</div>
+       @click="$emit('modalHide'), hideModals()">+</div>
 
-  <form v-if="addContactShowBool">
+  <form v-if="isAddContactShow">
     <div class="contact-image">
       <img v-if="newContact.image" :src="newContact.image" style="width: 100px" />
       <img v-else src="../assets/no-avatar.jpg" style="width: 100px" />
@@ -23,21 +23,21 @@
       </div>
       <div class="modal-input">
         <input type="submit"
-               @click="$emit('add-contact', newContact), hideModals()"
+               @click="$emit('addContact', newContact), hideModals()"
                @click.prevent.self>
       </div>
     </div>
   </form>
 
-  <form v-else-if="editContactShowBool">
+  <form v-else-if="isEditContactShow">
     <div class="contact-image">
       <img v-if="editableContact.image" :src="editableContact.image" style="width: 100px" />
       <img v-else src="../assets/no-avatar.jpg" style="width: 100px" />
     </div>
-    <!-- <div class="change-image">
+    <div class="change-image">
       <input v-if="!editableContact.image" type="file" @change="uploadImage">
       <button v-else @click="deleteImage" type="button">Удалить изображение</button>
-    </div> -->
+    </div>
     <div class="modal-edit-inputs">
       <div class="modal-input">
         <input type="text"
@@ -49,7 +49,7 @@
       </div>
       <div class="modal-input">
         <input type="submit"
-               @click="$emit('edit-contact', [editableContact, indexOfEdit]), hideModals()"
+               @click="$emit('editContact', [editableContact, indexOfEdit]), hideModals()"
                @click.prevent.self>
       </div>
     </div>
@@ -58,14 +58,16 @@
 </template>
 
 <script>
+import cloneDeep from "lodash.clonedeep"
+
 export default {
   name: 'AddEditModal',
   data() {
     return {
       nameInput: '',
       phoneInput: '',
-      addContactShowBool: false,
-      editContactShowBool: false,
+      isAddContactShow: false,
+      isEditContactShow: false,
       indexOfEdit: '',
       newContact: {
         name: null,
@@ -77,39 +79,33 @@ export default {
   },
   methods: {
     clearInputs() {
-      // this.editableContact.name = null;
-      // this.editableContact.number = null;
-      // this.editableContact.image = '';
-      // this.newContact.name = null;
-      // this.newContact.number = null;
-      // this.newContact.image = '';
+      this.newContact = {
+        name: null,
+        number: null,
+        image: ''
+      }
     },
 
     addContactShow() {
-      this.addContactShowBool = true;
-      this.editContactShowBool = false;
+      this.isAddContactShow = true;
+      this.isEditContactShow = false;
     },
 
     editContactShow(editableContactInfo, index) {
-      this.editContactShowBool = true;
-      this.addContactShowBool = false;
+      this.isEditContactShow = true;
+      this.isAddContactShow = false;
 
-      for (let i in editableContactInfo) {
-        this.editableContact[i] = editableContactInfo[i];
-      }
-
+      this.editableContact = cloneDeep(editableContactInfo);
       this.indexOfEdit = index;
     },
 
     hideModals() {
-      this.addContactShowBool = false;
-      this.editContactShowBool = false;
-
-      this.clearInputs();
+      this.isAddContactShow = false;
+      this.isEditContactShow = false;
     },
 
     uploadImage(e) {
-      var files = e.target.files || e.dataTransfer.files;
+      let files = e.target.files || e.dataTransfer.files;
       if (!files.length) {
         return;
       };
@@ -117,17 +113,21 @@ export default {
     },
 
     createImage(file) {
-      var fileReader = new FileReader();
-      var self = this;
+      let fileReader = new FileReader();
+      let self = this;
 
       fileReader.onload = (e) => {
-        this.newContact.image = e.target.result
+        if (this.isAddContactShow) {
+          this.newContact.image = e.target.result
+        } else {
+          this.editableContact.image = e.target.result
+        }
       };
       fileReader.readAsDataURL(file);
     },
 
     deleteImage() {
-      if (this.addContactShowBool) {
+      if (this.isAddContactShow) {
         this.newContact.image = ''
       } else {
         this.editableContact.image = ''

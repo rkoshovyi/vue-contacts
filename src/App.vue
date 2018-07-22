@@ -7,15 +7,15 @@
 
       <contacts
         ref="contacts"
-        @add-contact-show="showAddModal"
-        @edit-contact-show="showEditModal" />
+        @addContactShow="showAddModal"
+        @editContactShow="showEditModal" />
 
       <add-edit-modal
         ref="modal"
         v-show="showModal"
-        @modal-hide="modalHide"
-        @add-contact="addContact"
-        @edit-contact="editContact" />
+        @modalHide="modalHide"
+        @addContact="addContact"
+        @editContact="editContact" />
     </div>
   </div>
 </template>
@@ -52,6 +52,7 @@ export default {
 
      addContact(newContactInfo) {
        this.$refs.contacts.addContact(newContactInfo);
+       this.$refs.modal.clearInputs();
        this.modalHide();
      },
 

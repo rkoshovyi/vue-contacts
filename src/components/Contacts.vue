@@ -5,8 +5,8 @@
         v-for="contact in contactsList"
         ref="contacts" >
       <div class="contact-image">
-        <img :src="contact.image">
-        <!-- <img src="../assets/no-avatar.jpg"/> -->
+        <img v-if="contact.image" :src="contact.image">
+        <img v-else src="../assets/no-avatar.jpg"/>
       </div>
 
       <div class="contact-info">
@@ -23,11 +23,11 @@
            @click="deleteContact(contact)">+</div>
 
       <div class="edit-button contact-button"
-           @click="$emit('edit-contact-show', contact)">edit</div>
+           @click="$emit('editContactShow', contact)">edit</div>
     </li>
   </ul>
 
-  <div class="add-contact-button" @click="$emit('add-contact-show')">+</div>
+  <div class="add-contact-button" @click="$emit('addContactShow')">+</div>
 </div>
 </template>
 
@@ -65,7 +65,7 @@ export default {
     },
 
     getContacts() {
-      var contactsLocal = JSON.parse(localStorage.getItem('contacts') || '[]');
+      let contactsLocal = JSON.parse(localStorage.getItem('contacts') || '[]');
 
       for (let i = 0; i < contactsLocal.length; i++) {
         this.contactsList.push(contactsLocal[i]);
