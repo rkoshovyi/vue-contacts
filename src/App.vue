@@ -10,7 +10,7 @@
         @add-contact-show="showAddModal"
         @edit-contact-show="showEditModal" />
 
-      <modal
+      <add-edit-modal
         ref="modal"
         v-show="showModal"
         @modal-hide="modalHide"
@@ -24,7 +24,7 @@
 import Contacts from './components/Contacts'
 import Search from './components/Search'
 import Controls from './components/Controls'
-import Modal from './components/Modal'
+import AddEditModal from './components/AddEditModal'
 
 export default {
   name: 'App',
@@ -32,7 +32,7 @@ export default {
     Contacts,
     Search,
     Controls,
-    Modal
+    AddEditModal
   },
   data() {
     return {
@@ -46,37 +46,22 @@ export default {
      },
 
      showEditModal(contactInfo) {
-       var contactInfoObject =  {
-         name: contactInfo[0].name,
-         number: contactInfo[0].number
-       }
-
-        this.$refs.modal.editContactShow(contactInfoObject, contactInfo[1]);
+        this.$refs.modal.editContactShow(contactInfo, this.$refs.contacts.contactsList.indexOf(contactInfo));
         this.showModal = true;
      },
 
-     addContact(contactInfo) {
-       var contactInfoObject = {
-         name: contactInfo[0],
-         number: contactInfo[1]
-       }
-       this.$refs.contacts.addContact(contactInfoObject);
+     addContact(newContactInfo) {
+       this.$refs.contacts.addContact(newContactInfo);
+       this.modalHide();
      },
 
-     editContact(newContactInfo) {
-
-       var index = newContactInfo[2];
-       var newContactInfoObject = {
-         name: newContactInfo[0],
-         number: newContactInfo[1]
-       }
-
-       this.$refs.contacts.editContact(newContactInfoObject, index);
+     editContact(editableContactInfo) {
+       this.$refs.contacts.editContact(editableContactInfo[0], editableContactInfo[1]);
+       this.modalHide();
      },
 
       modalHide() {
         this.showModal = false;
-        this.$refs.modal.hideModals();
       }
    }
 }

@@ -5,7 +5,8 @@
         v-for="contact in contactsList"
         ref="contacts" >
       <div class="contact-image">
-        <img src="../assets/no-avatar.jpg"/>
+        <img :src="contact.image">
+        <!-- <img src="../assets/no-avatar.jpg"/> -->
       </div>
 
       <div class="contact-info">
@@ -22,7 +23,7 @@
            @click="deleteContact(contact)">+</div>
 
       <div class="edit-button contact-button"
-           @click="$emit('edit-contact-show', [contact, contactsList.indexOf(contact)])">edit</div>
+           @click="$emit('edit-contact-show', contact)">edit</div>
     </li>
   </ul>
 
@@ -36,8 +37,9 @@ export default {
   data() {
     return {
       contact: {
-        name: '',
-        number: ''
+        name: null,
+        number: null,
+        image: ''
       },
       contactsList: []
     }
@@ -50,14 +52,16 @@ export default {
       localStorage.setItem('contacts', JSON.stringify(this.contactsList));
     },
 
-    addContact(contactInfoObject) {
-      this.contactsList.push(contactInfoObject);
+    addContact(newContactInfo) {
+      this.contactsList.push(newContactInfo);
       this.saveContactsList();
     },
 
-    editContact(newContactInfoObject, index) {
-      this.contactsList[index].name = newContactInfoObject.name;
-      this.contactsList[index].number = newContactInfoObject.number;
+    editContact(editableContactInfo, index) {
+      this.contactsList[index].name = editableContactInfo.name;
+      this.contactsList[index].number = editableContactInfo.number;
+      this.contactsList[index].image = editableContactInfo.image;
+      this.saveContactsList();
     },
 
     getContacts() {
