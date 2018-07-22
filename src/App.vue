@@ -1,9 +1,8 @@
 <template>
   <div id="app">
     <div class="contacts-wrapper" >
-      <controls />
-
-      <search />
+      <!-- <controls />
+      <search /> -->
 
       <contacts
         ref="contacts"
@@ -77,6 +76,11 @@ export default {
     outline: none;
   }
 
+  body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+  }
+
   ul {
     list-style: none;
   }
@@ -88,6 +92,7 @@ export default {
     justify-content: center;
     flex-direction: column;
     width: 500px;
+    max-width: 100%;
     height: 100vh;
     margin: 0 auto;
   }

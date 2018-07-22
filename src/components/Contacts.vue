@@ -1,33 +1,36 @@
 <template>
 <div class="contacts-list-wrapper">
   <ul class="contacts-list">
-    <li class="contact"
-        v-for="contact in contactsList"
-        ref="contacts" >
-      <div class="contact-image">
-        <img v-if="contact.image" :src="contact.image">
-        <img v-else src="../assets/no-avatar.jpg"/>
-      </div>
-
-      <div class="contact-info">
-        <div class="contact-name">
-          {{ contact.name }}
+    <div v-if="contactsList.length" >
+      <li class="contact"
+          v-for="contact in contactsList"
+          ref="contacts" >
+        <div class="contact-image">
+          <img v-if="contact.image" :src="contact.image">
+          <img v-else src="../assets/no-avatar.jpg"/>
         </div>
 
-        <div class="contact-number">
-          {{ contact.number }}
+        <div class="contact-info">
+          <div class="contact-name">
+            {{ contact.name }}
+          </div>
+
+          <div class="contact-number">
+            {{ contact.number }}
+          </div>
         </div>
-      </div>
 
-      <div class="delete-button contact-button"
-           @click="deleteContact(contact)">+</div>
+        <div class="delete-button contact-button"
+             @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
 
-      <div class="edit-button contact-button"
-           @click="$emit('editContactShow', contact)">edit</div>
-    </li>
+        <div class="edit-button contact-button"
+             @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
+      </li>
+    </div>
+    <p v-else style="text-align: center">Контактов нет</p>
   </ul>
 
-  <div class="add-contact-button" @click="$emit('addContactShow')">+</div>
+  <div class="add-contact-button" @click="$emit('addContactShow')"><i class="fas fa-plus"></i></div>
 </div>
 </template>
 
@@ -92,7 +95,7 @@ export default {
     height: 420px;
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #ccc;
+    box-shadow: 0 0 20px rgba(#000, .25);
     overflow: auto;
   }
 
@@ -131,37 +134,37 @@ export default {
 
     .contact-button {
       position: absolute;
+      top: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 20px;
+      height: 20px;
       background-color: #fff;
       cursor: pointer;
       border: 1px solid #ccc;
+      border-radius: 50%;
+      font-size: 10px;
+      transition: .3s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
 
     .delete-button {
-      top: 5px;
       right: 5px;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      font-size: 20px;
-      font-weight: 700;
-      transform: rotate(45deg);
     }
 
     .edit-button {
-      right: 5px;
-      bottom: 5px;
-      padding: 0 5px;
-      border-radius: 5px;
+      right: 30px;
     }
   }
 
   .add-contact-button {
     position: absolute;
-    right: 20px;
-    bottom: 20px;
+    right: 30px;
+    bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -171,7 +174,12 @@ export default {
     cursor: pointer;
     border: 1px solid #ccc;
     border-radius: 50%;
-    font-size: 30px;
     font-weight: 700;
+    box-shadow: 0 0 10px rgba(#000, .25);
+    transition: .3s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 </style>
