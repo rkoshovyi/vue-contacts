@@ -3,87 +3,95 @@
   <div class="modal-close"
        @click="$emit('modalHide'), hideModals()"><i class="fas fa-times"></i></div>
 
-  <form class="modal"
+  <form class="modal-form"
         v-if="isAddContactShow">
-    <div class="contacts-image-wrapper">
-      <div class="contact-image">
-        <img v-if="newContact.image" :src="newContact.image" />
-        <img v-else src="../assets/no-avatar.jpg" />
-      </div>
-      <div class="change-image">
-        <div class="image-button" v-if="!newContact.image" >
-          <input type="file" @change="uploadImage" id="addUploadImage">
-          <label for="addUploadImage">Загрузить фото</label>
+    <p class="modal-title">Добавить контакт</p>
+    <div class="modal-content">
+      <div class="contacts-image-wrapper">
+        <div class="contact-image">
+          <img v-if="newContact.image" :src="newContact.image" />
+          <img v-else src="../assets/no-avatar.jpg" />
         </div>
-        <div class="image-button" v-else >
-          <button type="button" @click="deleteImage">Удалить фото</button>
+        <div class="change-image">
+          <div class="image-button" v-if="!newContact.image" >
+            <input type="file" @change="uploadImage" id="addUploadImage">
+            <label for="addUploadImage">Загрузить фото</label>
+          </div>
+          <div class="image-button" v-else >
+            <button type="button" @click="deleteImage">Удалить фото</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="modal-edit-inputs">
-      <div class="modal-input">
-        <input type="text" placeholder="Имя"
-               v-model="newContact.name">
-      </div>
-      <div class="modal-input">
-        <input type="text" placeholder="Номер телефона"
-               v-model="newContact.phoneNumber">
-      </div>
-      <div class="modal-input">
-        <input type="text" placeholder="Рабочий номер"
-               v-model="newContact.workNumber">
-      </div>
-      <div class="modal-input">
-        <input type="text" placeholder="Email"
-               v-model="newContact.email">
-      </div>
-      <div class="save-contact-button">
-        <input type="submit" value="Добавить контакт"
-               @click="$emit('addContact', newContact), hideModals()"
-               @click.prevent.self>
+      <div class="modal-edit-inputs">
+        <div class="modal-input">
+          <input type="text" placeholder="Имя" name="name"
+                 v-model="newContact.name">
+        </div>
+        <div class="modal-input">
+          <input type="number" placeholder="Номер телефона" name="phone"
+                 v-model="newContact.phoneNumber">
+        </div>
+        <div class="modal-input">
+          <input type="number" placeholder="Рабочий номер" name="workPhone"
+                 v-model="newContact.workNumber">
+        </div>
+        <div class="modal-input">
+          <input type="text" placeholder="Email" name="email"
+                 v-model="newContact.email">
+        </div>
+        <div class="save-contact-button">
+          <input type="submit" value="Сохранить"
+                 @click="$emit('addContact', newContact), hideModals()"
+                 @click.prevent.self
+                 :disabled="required">
+        </div>
       </div>
     </div>
   </form>
 
-  <form class="modal"
+  <form class="modal-form"
         v-else-if="isEditContactShow">
-    <div class="contacts-image-wrapper">
-      <div class="contact-image">
-        <img v-if="editableContact.image" :src="editableContact.image" style="width: 100px" />
-        <img v-else src="../assets/no-avatar.jpg" style="width: 100px" />
-      </div>
-      <div class="change-image">
-        <div class="image-button" v-if="!editableContact.image" >
-          <input type="file" @change="uploadImage" id="addUploadImage">
-          <label for="addUploadImage">Загрузить фото</label>
+    <p class="modal-title">Изменить контакт</p>
+    <div class="modal-content">
+      <div class="contacts-image-wrapper">
+        <div class="contact-image">
+          <img v-if="editableContact.image" :src="editableContact.image" style="width: 100px" />
+          <img v-else src="../assets/no-avatar.jpg" style="width: 100px" />
         </div>
-        <div class="image-button" v-else>
-          <button @click="deleteImage" type="button">Удалить фото</button>
+        <div class="change-image">
+          <div class="image-button" v-if="!editableContact.image" >
+            <input type="file" @change="uploadImage" id="addUploadImage">
+            <label for="addUploadImage">Загрузить фото</label>
+          </div>
+          <div class="image-button" v-else>
+            <button @click="deleteImage" type="button">Удалить фото</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="modal-edit-inputs">
-      <div class="modal-input">
-        <input type="text" placeholder="Имя"
-               v-model="editableContact.name">
-      </div>
-      <div class="modal-input">
-        <input type="text" placeholder="Номер телефона"
-               v-model="editableContact.phoneNumber">
-      </div>
-      <div class="modal-input">
-        <input type="text" placeholder="Рабочий телефон"
-               v-model="editableContact.workNumber">
-      </div>
-      <div class="modal-input">
-        <input type="text" placeholder="Email"
-               v-model="editableContact.email">
-      </div>
-      <div class="save-contact-button">
-        <input type="submit" value="Сохранить контакт"
-               @click="$emit('editContact', [editableContact, indexOfEdit]), hideModals()"
-               @click.prevent.self>
+      <div class="modal-edit-inputs">
+        <div class="modal-input">
+          <input type="text" placeholder="Имя" name="name"
+                 v-model="editableContact.name">
+        </div>
+        <div class="modal-input">
+          <input type="number" placeholder="Номер телефона" name="phone"
+                 v-model="editableContact.phoneNumber">
+        </div>
+        <div class="modal-input">
+          <input type="number" placeholder="Рабочий телефон" name="workPhone"
+                 v-model="editableContact.workNumber">
+        </div>
+        <div class="modal-input">
+          <input type="text" placeholder="Email" name="email"
+                 v-model="editableContact.email">
+        </div>
+        <div class="save-contact-button">
+          <input type="submit" value="Сохранить"
+                 @click="$emit('editContact', [editableContact, indexOfEdit]), hideModals()"
+                 @click.prevent.self
+                 :disabled="required">
+        </div>
       </div>
     </div>
   </form>
@@ -110,7 +118,25 @@ export default {
         image: '',
         isFavorite: false
       },
-      editableContact: {}
+      editableContact: {},
+      disabled: true
+    }
+  },
+  computed: {
+    required() {
+      if (this.isAddContactShow) {
+        if (this.newContact.name && (this.newContact.phoneNumber || this.newContact.workNumber || this.newContact.email)) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        if (this.editableContact.name && (this.editableContact.phoneNumber || this.editableContact.workNumber || this.editableContact.email)) {
+          return false
+        } else {
+          return true
+        }
+      }
     }
   },
   methods: {
@@ -191,8 +217,18 @@ export default {
     background-color: #fff;
     box-shadow: 0 0 20px rgba(#000, .25);
 
-    .modal {
-        display: flex;
+    .modal-form {
+    }
+
+    .modal-title {
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .modal-content {
+      display: flex;
     }
 
     .contacts-image-wrapper {
@@ -211,6 +247,7 @@ export default {
 
             img {
                 width: 100%;
+                height: 100%;
             }
         }
     }
@@ -240,12 +277,18 @@ export default {
         }
     }
 
+    .image-button {
+      label,
+      button {
+        width: 100%;
+      }
+    }
+
     .modal-edit-inputs {
         display: flex;
         flex-direction: column;
         justify-content: center;
         width: 100%;
-        margin-top: 20px;
         text-align: right;
     }
 
@@ -259,9 +302,14 @@ export default {
 
         input {
             width: 100%;
-            padding: 5px 10px;
+            padding: 8px 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            margin: 0;
+
+            &::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+            }
         }
     }
 

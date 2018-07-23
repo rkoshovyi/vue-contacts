@@ -1,67 +1,75 @@
 <template>
-<div class="contacts-list-wrapper">
-  <ul class="contacts-list">
-    <div v-if="contactsList.length">
-      <li class="contact" v-for="contact in contactsList" ref="contacts">
-        <div class="contact-image">
-          <img v-if="contact.image" :src="contact.image">
-          <img v-else src="../assets/no-avatar.jpg" />
+  <div class="contact-container">
+    <form class="search">
+      <input type="text" placeholder="Начните вводить имя"
+             v-model="filterValue"
+             :change="filteredContacts">
+    </form>
+
+    <div class="contacts-list-wrapper">
+      <ul class="contacts-list">
+        <div v-if="contactsList.length">
+          <li class="contact" v-for="contact in contactsList" ref="contacts">
+            <div class="contact-image">
+              <img v-if="contact.image" :src="contact.image">
+              <img v-else src="../assets/no-avatar.jpg" />
+            </div>
+
+            <div class="contact-info">
+              <div class="contact-info-row" v-show="contact.name">
+                <div class="contact-info-left">
+                  Имя:
+                </div>
+                <div class="contact-info-item">
+                  {{ contact.name }}
+                </div>
+              </div>
+
+              <div class="contact-info-row" v-show="contact.phoneNumber">
+                <div class="contact-info-left">
+                  Номер телефона:
+                </div>
+                <div class="contact-info-item">
+                  {{ contact.phoneNumber }}
+                </div>
+              </div>
+
+              <div class="contact-info-row" v-show="contact.workNumber">
+                <div class="contact-info-left">
+                  Рабочий номер:
+                </div>
+                <div class="contact-info-item">
+                  {{ contact.workNumber }}
+                </div>
+              </div>
+
+
+              <div class="contact-info-row" v-show="contact.email">
+                <div class="contact-info-left">
+                  Email:
+                </div>
+                <div class="contact-info-item">
+                  {{ contact.email }}
+                </div>
+              </div>
+            </div>
+
+            <div class="favorite-button contact-button" @click="isFavoriteChanging(contact)">
+              <i class="fas fa-star" v-if="contact.isFavorite"></i>
+              <i class="far fa-star" v-else></i>
+            </div>
+
+            <div class="edit-button contact-button" @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
+
+            <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
+          </li>
         </div>
+        <p v-else style="text-align: center">Контактов нет</p>
+      </ul>
 
-        <div class="contact-info">
-          <div class="contact-info-row" v-show="contact.name">
-            <div class="contact-info-left">
-              Имя:
-            </div>
-            <div class="contact-info-item">
-              {{ contact.name }}
-            </div>
-          </div>
-
-          <div class="contact-info-row" v-show="contact.phoneNumber">
-            <div class="contact-info-left">
-              Номер телефона:
-            </div>
-            <div class="contact-info-item">
-              {{ contact.phoneNumber }}
-            </div>
-          </div>
-
-          <div class="contact-info-row" v-show="contact.workNumber">
-            <div class="contact-info-left">
-              Рабочий номер:
-            </div>
-            <div class="contact-info-item">
-              {{ contact.workNumber }}
-            </div>
-          </div>
-
-
-          <div class="contact-info-row" v-show="contact.email">
-            <div class="contact-info-left">
-              Email:
-            </div>
-            <div class="contact-info-item">
-              {{ contact.email }}
-            </div>
-          </div>
-        </div>
-
-        <div class="favorite-button contact-button" @click="isFavoriteChanging(contact)">
-          <i class="fas fa-star" v-if="contact.isFavorite"></i>
-          <i class="far fa-star" v-else></i>
-        </div>
-
-        <div class="edit-button contact-button" @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
-
-        <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
-      </li>
+      <div class="add-contact-button" @click="$emit('addContactShow')"><i class="fas fa-plus"></i></div>
     </div>
-    <p v-else style="text-align: center">Контактов нет</p>
-  </ul>
-
-  <div class="add-contact-button" @click="$emit('addContactShow')"><i class="fas fa-plus"></i></div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -77,11 +85,22 @@ export default {
         image: '',
         isFavorite: false
       },
-      contactsList: []
+      contactsList: [],
+      filterValue: ''
     }
   },
   mounted() {
     this.getContacts();
+  },
+  computed: {
+    filteredContacts() {
+
+      if (this.filterValue) {
+        console.log(this.filterValue);
+      } else {
+        console.log('pusto');
+      }
+    }
   },
   methods: {
     saveContactsList() {
@@ -107,7 +126,7 @@ export default {
 
       for (let i = 0; i < contactsLocal.length; i++) {
         this.contactsList.push(contactsLocal[i]);
-      }
+      };
     },
 
     isFavoriteChanging(contact) {
@@ -125,6 +144,24 @@ export default {
 </script>
 
 <style lang="scss">
+.contact-container {
+  width: 100%;
+}
+
+.search {
+  width: 100%;
+  margin-bottom: 20px;
+
+  input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: 0 0 20px rgba(#000, .25);
+  }
+}
+
 .contacts-list-wrapper {
     position: relative;
     width: 100%;
@@ -133,7 +170,7 @@ export default {
 .contacts-list {
     width: 100%;
     height: 420px;
-    padding: 10px;
+    padding: 0 10px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(#000, .25);
     overflow: auto;
@@ -143,7 +180,6 @@ export default {
     position: relative;
     display: flex;
     padding: 10px 0;
-    cursor: pointer;
     border-bottom: 1px solid #ccc;
 
     &:last-child {
@@ -161,6 +197,7 @@ export default {
 
         img {
             width: 100%;
+            height: 100%;
         }
     }
 
@@ -170,7 +207,7 @@ export default {
 
         .contact-info-row {
           display: flex;
-          margin-bottom: 10px;
+          margin-bottom: 5px;
         }
 
         .contact-info-left {

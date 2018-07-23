@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <div class="contacts-wrapper" >
-      <!-- <controls />
-      <search /> -->
+      <!-- <controls />-->
 
       <contacts
         ref="contacts"
@@ -21,7 +20,6 @@
 
 <script>
 import Contacts from './components/Contacts'
-import Search from './components/Search'
 import Controls from './components/Controls'
 import AddEditModal from './components/AddEditModal'
 
@@ -29,7 +27,6 @@ export default {
   name: 'App',
   components: {
     Contacts,
-    Search,
     Controls,
     AddEditModal
   },
@@ -77,7 +74,6 @@ export default {
   }
 
   body {
-    min-width: 320px;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
   }
@@ -93,7 +89,6 @@ export default {
     justify-content: center;
     flex-direction: column;
     width: 500px;
-    max-width: 100%;
     height: 100vh;
     margin: 0 auto;
   }
