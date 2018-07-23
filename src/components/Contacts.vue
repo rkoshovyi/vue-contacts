@@ -11,7 +11,7 @@
         <div v-if="contactsList.length">
           <li class="contact"
               v-for="contact in contactsList"
-              v-if="isAllContactsShowing">
+              v-if="!isFilteredContactsShowing">
             <div class="contact-image">
               <img v-if="contact.image" :src="contact.image">
               <img v-else src="../assets/no-avatar.jpg" />
@@ -64,9 +64,10 @@
 
             <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
           </li>
+          
           <li class="contact"
               v-for="contact in filteredContactsList"
-              v-if="!isAllContactsShowing">
+              v-if="isFilteredContactsShowing">
             <div class="contact-image">
               <img v-if="contact.image" :src="contact.image">
               <img v-else src="../assets/no-avatar.jpg" />
@@ -145,7 +146,7 @@ export default {
       contactsList: [],
       filteredContactsList: [],
       filterValue: '',
-      isAllContactsShowing: true
+      isFilteredContactsShowing: false
     }
   },
   mounted() {
@@ -153,13 +154,13 @@ export default {
   },
   computed: {
     filteredContacts() {
-      let filterInput = this.filterValue,
+      let filterInput = this.filterValue.toUpperCase(),
           coincidedContacts = [],
           filteredContacts = [];
 
       if (filterInput) {
         this.contactsList.filter(function(element) {
-          coincidedContacts.push(element.name.indexOf(filterInput) > -1)
+          coincidedContacts.push(element.name.toUpperCase().indexOf(filterInput) > -1)
         });
 
         for (let i = 0; i < coincidedContacts.length; i++) {
@@ -168,12 +169,10 @@ export default {
           }
         }
 
-        console.log(coincidedContacts);
-
-        this.isAllContactsShowing = false;
+        this.isFilteredContactsShowing = true;
         this.filteredContactsList = filteredContacts;
       } else {
-        this.isAllContactsShowing = true;
+        this.isFilteredContactsShowing = false;
       }
     }
   },
