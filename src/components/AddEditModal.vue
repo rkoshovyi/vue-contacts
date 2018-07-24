@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="modal-edit-inputs">
+      <div class="modal-inputs">
         <div class="modal-input">
           <input type="text" placeholder="Имя" name="name"
                  v-model="newContact.name">
@@ -40,6 +40,12 @@
           <input type="text" placeholder="Email" name="email"
                  v-model="newContact.email">
         </div>
+        <!-- <div class="modal-input">
+          <select class="modal-select" name="group">
+            <option v-for="group in groups"
+                    :value="group.name">{{ group.name }}</option>
+          </select>
+        </div> -->
         <div class="save-contact-button">
           <input type="submit" value="Сохранить"
                  @click="$emit('addContact', newContact), hideModals()"
@@ -69,7 +75,7 @@
           </div>
         </div>
       </div>
-      <div class="modal-edit-inputs">
+      <div class="modal-inputs">
         <div class="modal-input">
           <input type="text" placeholder="Имя" name="name"
                  v-model="editableContact.name">
@@ -86,6 +92,12 @@
           <input type="text" placeholder="Email" name="email"
                  v-model="editableContact.email">
         </div>
+        <!-- <div class="modal-input">
+          <select class="modal-select" name="group">
+            <option v-for="group in groups"
+                  :value="group.name">{{ group.name }}</option>
+          </select>
+        </div> -->
         <div class="save-contact-button">
           <input type="submit" value="Сохранить"
                  @click="$emit('editContact', [editableContact, indexOfEdit]), hideModals()"
@@ -116,10 +128,25 @@ export default {
         workNumber: null,
         email: null,
         image: '',
-        isFavorite: false
+        isFavorite: false,
+        groups: null
       },
       editableContact: {},
-      disabled: true
+      disabled: true,
+      groups: [
+        {
+          name: 'Семья',
+          contactsCount: 0,
+        },
+        {
+          name: 'Друзья',
+          contactsCount: 0,
+        },
+        {
+          name: 'Сотрудники',
+          contactsCount: 0,
+        }
+      ],
     }
   },
   computed: {
@@ -213,12 +240,8 @@ export default {
     width: 100%;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 10px;
     background-color: #fff;
     box-shadow: 0 0 20px rgba(#000, .25);
-
-    .modal-form {
-    }
 
     .modal-title {
       width: 100%;
@@ -284,7 +307,7 @@ export default {
       }
     }
 
-    .modal-edit-inputs {
+    .modal-inputs {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -300,7 +323,8 @@ export default {
             margin-bottom: 0;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
             padding: 8px 10px;
             border: 1px solid #ccc;
@@ -310,6 +334,17 @@ export default {
             &::-webkit-inner-spin-button {
               -webkit-appearance: none;
             }
+        }
+
+        input {
+          &::placeholder {
+            color: #ccc;
+          }
+        }
+
+        select {
+          padding: 8px;
+          cursor: pointer;
         }
     }
 

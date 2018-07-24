@@ -1,84 +1,88 @@
 <template>
-  <div class="contact-container">
-    <form class="search">
-      <input type="text" placeholder="Начните вводить имя"
-             v-model="filterValue"
-             :change="filteredContacts">
-    </form>
+<div class="contact-container">
+  <!-- <div class="groups-buttons">
+    <button type="button" class="group-button">
+      Все контакты ({{ contactsList.length }})
+    </button>
+    <button type="button" class="group-button"
+            v-for="group in groups">{{ group.name }}</button>
+  </div> -->
+  <form class="search">
+    <input type="text" placeholder="Начните вводить имя" v-model="filterValue" :change="filteredContacts">
+  </form>
 
-    <div class="info-row">
-      <p>Всего контактов: {{ contactsList.length }}</p>
-      <p v-show="filterValue">Найдено: {{ filteredContacts.length }}</p>
-    </div>
+  <div class="contacts-list-wrapper">
+    <ul class="contacts-list">
+      <div v-if="contactsList.length">
+        <li class="contact" v-for="contact in filteredContacts">
+          <div class="contact-image">
+            <img v-if="contact.image" :src="contact.image">
+            <img v-else src="../assets/no-avatar.jpg" />
+          </div>
 
-    <div class="contacts-list-wrapper">
-      <ul class="contacts-list">
-        <div v-if="contactsList.length">
-          <li class="contact"
-              v-for="contact in filteredContacts">
-            <div class="contact-image">
-              <img v-if="contact.image" :src="contact.image">
-              <img v-else src="../assets/no-avatar.jpg" />
-            </div>
-
-            <div class="contact-info">
-              <div class="contact-info-row" v-show="contact.name">
-                <div class="contact-info-left">
-                  Имя:
-                </div>
-                <div class="contact-info-item">
-                  {{ contact.name }}
-                </div>
+          <div class="contact-info">
+            <div class="contact-info-row" v-show="contact.name">
+              <div class="contact-info-left">
+                Имя:
               </div>
-
-              <div class="contact-info-row" v-show="contact.phoneNumber">
-                <div class="contact-info-left">
-                  Личный:
-                </div>
-                <div class="contact-info-item">
-                  <a :href="`tel:{{ contact.phoneNumber }}`">{{ contact.phoneNumber }}</a>
-                </div>
-              </div>
-
-              <div class="contact-info-row" v-show="contact.workNumber">
-                <div class="contact-info-left">
-                  Рабочий:
-                </div>
-                <div class="contact-info-item">
-                  <a :href="`tel:{{ contact.workNumber }}`">{{ contact.workNumber }}</a>
-                </div>
-              </div>
-
-
-              <div class="contact-info-row" v-show="contact.email">
-                <div class="contact-info-left">
-                  Email:
-                </div>
-                <div class="contact-info-item">
-                  <a :href="`mailto:{{ contact.email }}`">{{ contact.email }}</a>
-                </div>
+              <div class="contact-info-item">
+                {{ contact.name }}
               </div>
             </div>
 
-            <div class="favorite-button contact-button" @click="isFavoriteChanging(contact)">
-              <i :class="[contact.isFavorite ? 'fas' : 'far', 'fa-star']"></i>
+            <div class="contact-info-row" v-show="contact.phoneNumber">
+              <div class="contact-info-left">
+                Личный:
+              </div>
+              <div class="contact-info-item">
+                <a :href="`tel:{{ contact.phoneNumber }}`">{{ contact.phoneNumber }}</a>
+              </div>
             </div>
 
-            <div class="edit-button contact-button" @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
+            <div class="contact-info-row" v-show="contact.workNumber">
+              <div class="contact-info-left">
+                Рабочий:
+              </div>
+              <div class="contact-info-item">
+                <a :href="`tel:{{ contact.workNumber }}`">{{ contact.workNumber }}</a>
+              </div>
+            </div>
 
-            <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
-          </li>
-        </div>
-        <p v-else class="no-contacts">Контактов нет</p>
-      </ul>
 
+            <div class="contact-info-row" v-show="contact.email">
+              <div class="contact-info-left">
+                Email:
+              </div>
+              <div class="contact-info-item">
+                <a :href="`mailto:{{ contact.email }}`">{{ contact.email }}</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="favorite-button contact-button" @click="isFavoriteChanging(contact)">
+            <i :class="[contact.isFavorite ? 'fas' : 'far', 'fa-star']"></i>
+          </div>
+
+          <div class="edit-button contact-button" @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
+
+          <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
+        </li>
+      </div>
+      <p v-else class="no-contacts">Контактов нет</p>
+    </ul>
+
+    <div class="bottom-bar">
+      <div class="contacts-count">
+        <p v-if="filterValue">Найдено: {{ filteredContacts.length }}</p>
+        <p v-else>Всего контактов: {{ contactsList.length }}</p>
+      </div>
       <div class="add-contact-button" @click="$emit('addContactShow')"><i class="fas fa-plus"></i></div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
-
 export default {
   name: 'Contacts',
   data() {
@@ -90,9 +94,23 @@ export default {
         email: null,
         image: '',
         isFavorite: false,
-        isContactShowing: true
+        groups: null
       },
       contactsList: [],
+      groups: [
+        {
+          name: 'Семья',
+          contactsCount: 0,
+        },
+        {
+          name: 'Друзья',
+          contactsCount: 0,
+        },
+        {
+          name: 'Сотрудники',
+          contactsCount: 0,
+        }
+      ],
       filterValue: '',
     }
   },
@@ -114,7 +132,7 @@ export default {
 
     sortContactsList(array) {
       let favoriteConacts = [],
-          usualContacts = [];
+        usualContacts = [];
       let sortedArray = array.slice().sort(function(a, b) {
         if (a.name.toUpperCase() > b.name.toUpperCase()) {
           return 1;
@@ -171,40 +189,52 @@ export default {
 </script>
 
 <style lang="scss">
-
 .contact-container {
-  width: 100%;
+    width: 100%;
 }
 
-.search {
-  width: 100%;
+.groups-buttons {
+  display: flex;
   margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(#000, .25);
 
-  input {
-    width: 100%;
-    padding: 14px;
+  .group-button {
+    width: 25%;
+    padding: 14px 3px;
+    background-color: #fff;
     border: none;
-    outline: none;
-    box-shadow: 0 0 20px rgba(#000, .25);
+    border-right: 1px solid #ccc;
+    cursor: pointer;
+
+    &:last-child {
+      border-right: none;
+    }
   }
 }
 
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+.search {
+    width: 100%;
+    margin-bottom: 20px;
+
+    input {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        outline: none;
+        box-shadow: 0 0 20px rgba(#000, .25);
+    }
 }
 
 .contacts-list-wrapper {
     position: relative;
     width: 100%;
+    box-shadow: 0 0 20px rgba(#000, .25);
 }
 
 .contacts-list {
     width: 100%;
     height: 420px;
     padding: 0 10px;
-    box-shadow: 0 0 20px rgba(#000, .25);
     overflow-y: auto;
 }
 
@@ -238,12 +268,12 @@ export default {
         flex-direction: column;
 
         .contact-info-row {
-          display: flex;
-          margin-bottom: 1px;
+            display: flex;
+            margin-bottom: 1px;
         }
 
         .contact-info-left {
-          width: 70px;
+            width: 70px;
         }
     }
 
@@ -263,7 +293,7 @@ export default {
         transition: 0.3s;
 
         &.favorite-button {
-          right: 55px;
+            right: 55px;
         }
 
         &.edit-button {
@@ -281,29 +311,34 @@ export default {
 }
 
 .no-contacts {
-  text-align: center;
-  margin-top: 10px;
+    text-align: center;
+    margin-top: 10px;
 }
 
-.add-contact-button {
-    position: absolute;
-    right: 30px;
-    bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background-color: #fff;
-    cursor: pointer;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    font-weight: 700;
-    box-shadow: 0 0 10px rgba(#000, .25);
-    transition: 0.3s;
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 10px;
 
-    &:hover {
-        transform: scale(1.05);
-    }
+  .add-contact-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background-color: #fff;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(#000, .25);
+      transition: 0.3s;
+
+      &:hover {
+          transform: scale(1.05);
+      }
+  }
 }
 </style>

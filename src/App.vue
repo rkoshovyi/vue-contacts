@@ -1,8 +1,6 @@
 <template>
   <div id="app">
       <div class="contacts-wrapper" >
-        <!-- <controls />-->
-
         <contacts
           ref="contacts"
           @addContactShow="showAddModal"
@@ -20,14 +18,12 @@
 
 <script>
 import Contacts from './components/Contacts'
-import Controls from './components/Controls'
 import AddEditModal from './components/AddEditModal'
 
 export default {
   name: 'App',
   components: {
     Contacts,
-    Controls,
     AddEditModal
   },
   data() {
