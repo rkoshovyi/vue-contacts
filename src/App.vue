@@ -1,20 +1,20 @@
 <template>
   <div id="app">
-    <div class="contacts-wrapper" >
-      <!-- <controls />-->
+      <div class="contacts-wrapper" >
+        <!-- <controls />-->
 
-      <contacts
-        ref="contacts"
-        @addContactShow="showAddModal"
-        @editContactShow="showEditModal" />
+        <contacts
+          ref="contacts"
+          @addContactShow="showAddModal"
+          @editContactShow="showEditModal" />
 
-      <add-edit-modal
-        ref="modal"
-        v-show="showModal"
-        @modalHide="modalHide"
-        @addContact="addContact"
-        @editContact="editContact" />
-    </div>
+        <add-edit-modal
+          ref="modal"
+          v-show="showModal"
+          @modalHide="modalHide"
+          @addContact="addContact"
+          @editContact="editContact" />
+      </div>
   </div>
 </template>
 
@@ -59,6 +59,10 @@ export default {
 
       modalHide() {
         this.showModal = false;
+      },
+
+      scrollHanle(evt) {
+        console.log(evt)
       }
    }
 }

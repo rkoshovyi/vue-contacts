@@ -31,7 +31,7 @@
                   Номер телефона:
                 </div>
                 <div class="contact-info-item">
-                  {{ contact.phoneNumber }}
+                  <a :href="`tel:{{ contact.phoneNumber }}`">{{ contact.phoneNumber }}</a>
                 </div>
               </div>
 
@@ -40,7 +40,7 @@
                   Рабочий номер:
                 </div>
                 <div class="contact-info-item">
-                  {{ contact.workNumber }}
+                  <a :href="`tel:{{ contact.workNumber }}`">{{ contact.workNumber }}</a>
                 </div>
               </div>
 
@@ -50,7 +50,7 @@
                   Email:
                 </div>
                 <div class="contact-info-item">
-                  {{ contact.email }}
+                  <a :href="`mailto:{{ contact.email }}`">{{ contact.email }}</a>
                 </div>
               </div>
             </div>
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Contacts',
   data() {
@@ -102,7 +103,19 @@ export default {
   },
   methods: {
     saveContactsList() {
-      localStorage.setItem('contacts', JSON.stringify(this.contactsList));
+      localStorage.setItem('contacts', JSON.stringify(this.sortContacts(this.contactsList)));
+    },
+
+    sortContacts(array) {
+      return array.slice().sort(function(a, b) {
+        if (a.name.toUpperCase() > b.name.toUpperCase()) {
+          return 1;
+        }
+        if (a.name.toUpperCase() < b.name.toUpperCase()) {
+          return -1;
+        }
+        return 0;
+      });
     },
 
     addContact(newContactInfo) {
@@ -111,11 +124,7 @@ export default {
     },
 
     editContact(editableContactInfo, index) {
-      this.contactsList[index].name = editableContactInfo.name;
-      this.contactsList[index].phoneNumber = editableContactInfo.phoneNumber;
-      this.contactsList[index].workNumber = editableContactInfo.workNumber;
-      this.contactsList[index].email = editableContactInfo.email;
-      this.contactsList[index].image = editableContactInfo.image;
+      this.$set(this.contactsList, index, editableContactInfo);
       this.saveContactsList();
     },
 
@@ -136,7 +145,7 @@ export default {
     },
 
     deleteContact(contact) {
-      this.contactsList.splice(this.contactsList.indexOf(contact), 1);
+      this.$delete(this.contactsList, this.contactsList.indexOf(contact));
       this.saveContactsList();
     }
   }
@@ -144,6 +153,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 .contact-container {
   width: 100%;
 }
@@ -173,7 +183,7 @@ export default {
     padding: 0 10px;
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(#000, .25);
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .contact {
@@ -207,7 +217,7 @@ export default {
 
         .contact-info-row {
           display: flex;
-          margin-bottom: 5px;
+          margin-bottom: 1px;
         }
 
         .contact-info-left {
