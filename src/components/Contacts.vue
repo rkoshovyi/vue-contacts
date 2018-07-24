@@ -17,56 +17,68 @@
     <ul class="contacts-list">
       <div v-if="contactsList.length">
         <li class="contact" v-for="contact in filteredContacts">
-          <div class="contact-image">
-            <img v-if="contact.image" :src="contact.image">
-            <img v-else src="../assets/no-avatar.jpg" />
+          <div class="contact-wrapper"
+               :class="contact.color">
+            <div class="contact-image">
+              <img v-if="contact.image" :src="contact.image">
+              <img v-else src="../assets/no-avatar.jpg" />
+            </div>
+
+            <div class="contact-info">
+              <div class="contact-info-row" v-show="contact.name">
+                <div class="contact-info-left">
+                  Имя:
+                </div>
+                <div class="contact-info-item">
+                  {{ contact.name }}
+                </div>
+              </div>
+
+              <div class="contact-info-row" v-show="contact.phoneNumber">
+                <div class="contact-info-left">
+                  Личный:
+                </div>
+                <div class="contact-info-item">
+                  <a :href="`tel:{{ contact.phoneNumber }}`">{{ contact.phoneNumber }}</a>
+                </div>
+              </div>
+
+              <div class="contact-info-row" v-show="contact.workNumber">
+                <div class="contact-info-left">
+                  Рабочий:
+                </div>
+                <div class="contact-info-item">
+                  <a :href="`tel:{{ contact.workNumber }}`">{{ contact.workNumber }}</a>
+                </div>
+              </div>
+
+              <div class="contact-info-row" v-show="contact.email">
+                <div class="contact-info-left">
+                  Email:
+                </div>
+                <div class="contact-info-item">
+                  <a :href="`mailto:{{ contact.email }}`">{{ contact.email }}</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="favorite-button contact-button" @click="isFavoriteChanging(contact)">
+              <i :class="[contact.isFavorite ? 'fas' : 'far', 'fa-star']"></i>
+            </div>
+
+            <div class="edit-button contact-button" @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
+
+            <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
           </div>
 
-          <div class="contact-info">
-            <div class="contact-info-row" v-show="contact.name">
-              <div class="contact-info-left">
-                Имя:
-              </div>
-              <div class="contact-info-item">
-                {{ contact.name }}
-              </div>
-            </div>
-
-            <div class="contact-info-row" v-show="contact.phoneNumber">
-              <div class="contact-info-left">
-                Личный:
-              </div>
-              <div class="contact-info-item">
-                <a :href="`tel:{{ contact.phoneNumber }}`">{{ contact.phoneNumber }}</a>
-              </div>
-            </div>
-
-            <div class="contact-info-row" v-show="contact.workNumber">
-              <div class="contact-info-left">
-                Рабочий:
-              </div>
-              <div class="contact-info-item">
-                <a :href="`tel:{{ contact.workNumber }}`">{{ contact.workNumber }}</a>
-              </div>
-            </div>
-
-            <div class="contact-info-row" v-show="contact.email">
-              <div class="contact-info-left">
-                Email:
-              </div>
-              <div class="contact-info-item">
-                <a :href="`mailto:{{ contact.email }}`">{{ contact.email }}</a>
-              </div>
-            </div>
+          <div class="delete-contact-modal" v-show="isDeleteModalShow">
+            <button type="button" @click="deleteContactConfirmModal()">Удалить</button>
+            <button type="button" @click="isDeleteModalShow = false">Отмена</button>
           </div>
 
-          <div class="favorite-button contact-button" @click="isFavoriteChanging(contact)">
-            <i :class="[contact.isFavorite ? 'fas' : 'far', 'fa-star']"></i>
+          <div class="contact-saved" v-show="isContactSavedShow">
+            Контакт сохранён!
           </div>
-
-          <div class="edit-button contact-button" @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
-
-          <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
         </li>
       </div>
       <p v-else class="no-contacts">Контактов нет</p>
@@ -88,15 +100,15 @@ export default {
   name: 'Contacts',
   data() {
     return {
-      contact: {
-        name: null,
-        phoneNumber: null,
-        workNumber: null,
-        email: null,
-        image: '',
-        isFavorite: false,
-        contactGroup: ''
-      },
+      // contact: {
+      //   name: null,
+      //   phoneNumber: null,
+      //   workNumber: null,
+      //   email: null,
+      //   image: '',
+      //   isFavorite: false,
+      //   contactGroup: ''
+      // },
       contactsList: [],
       filterValue: '',
       groups: [
@@ -110,20 +122,26 @@ export default {
           name: 'Сотрудники'
         }
       ],
-      activeGroup: ''
+      activeGroup: '',
+      isDeleteModalShow: false,
+      isContactSavedShow: false,
+      deleteContactConfirmIndex: ''
     }
   },
   mounted() {
     this.getContacts();
   },
   computed: {
-
     filteredContacts() {
       return this.contactsList.filter(contact => {
-        if (this.filterValue) {
+        if (this.filterValue && this.activeGroup === '') {
           return contact.name.toUpperCase().includes(this.filterValue.toUpperCase())
         } else if (this.activeGroup !== '') {
-          return contact.contactGroup == this.activeGroup
+          if (this.filterValue) {
+            return (contact.name.toUpperCase().includes(this.filterValue.toUpperCase()) && contact.contactGroup == this.activeGroup)
+          } else {
+            return contact.contactGroup == this.activeGroup
+          }
         } else {
           return contact
         }
@@ -168,11 +186,13 @@ export default {
     addContact(newContactInfo) {
       this.contactsList.push(newContactInfo);
       this.saveContactsList();
+      this.contactSavedModal();
     },
 
     editContact(editableContactInfo, index) {
       this.$set(this.contactsList, index, editableContactInfo);
       this.saveContactsList();
+      this.contactSavedModal();
     },
 
     getContacts() {
@@ -191,8 +211,21 @@ export default {
     },
 
     deleteContact(contact) {
-      this.$delete(this.contactsList, this.contactsList.indexOf(contact));
+      this.deleteContactConfirmIndex = this.contactsList.indexOf(contact);
+      this.isDeleteModalShow = true;
+    },
+
+    deleteContactConfirmModal() {
+      this.$delete(this.contactsList, this.deleteContactConfirmIndex);
       this.saveContactsList();
+      this.isDeleteModalShow = false;
+    },
+
+    contactSavedModal() {
+      this.isContactSavedShow = true;
+      setTimeout(() => {
+        this.isContactSavedShow = false;
+      }, 1000)
     }
   }
 }
@@ -248,19 +281,41 @@ export default {
 .contacts-list {
     width: 100%;
     height: 420px;
-    padding: 0 10px;
     overflow-y: auto;
 }
 
 .contact {
-    position: relative;
-    display: flex;
-    padding: 10px 0;
     border-bottom: 1px solid #ccc;
 
     &:last-child {
         border: none;
         margin-bottom: 0;
+    }
+}
+
+.contact-wrapper {
+    position: relative;
+    display: flex;
+    padding: 10px;
+
+    &.white {
+      background-color: white;
+    }
+
+    &.red {
+      background-color: rgba(#D32F2F, .5);
+    }
+
+    &.yellow {
+      background-color: rgba(#FFEB3B, .5);
+    }
+
+    &.blue {
+      background-color: rgba(#0288D1, .5);
+    }
+
+    &.gray {
+      background-color: rgba(#9E9E9E, .5);
     }
 
     .contact-image {
@@ -268,7 +323,7 @@ export default {
         width: 80px;
         height: 80px;
         margin-right: 20px;
-        border-radius: 10px;
+        border-radius: 50%;
         overflow: hidden;
 
         img {
@@ -313,15 +368,15 @@ export default {
         transition: 0.3s;
 
         &.favorite-button {
-            right: 55px;
+            right: 60px;
         }
 
         &.edit-button {
-            right: 30px;
+            right: 35px;
         }
 
         &.delete-button {
-            right: 5px;
+            right: 10px;
         }
 
         &:hover {
@@ -361,5 +416,23 @@ export default {
           transform: scale(1.05);
       }
   }
+}
+
+.delete-contact-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+}
+
+.contact-saved {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
 }
 </style>

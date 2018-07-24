@@ -47,12 +47,20 @@
                     :value="group.name">{{ group.name }}</option>
           </select>
         </div>
-        <div class="save-contact-button">
-          <input type="submit" value="Сохранить"
-                 @click="$emit('addContact', newContact), hideModals()"
-                 @click.prevent.self
-                 :disabled="required">
-        </div>
+        <div class="modal-inputs-bottom">
+          <ul class="modal-contact-colors">
+            <li class="modal-contact-color"
+                v-for="color in colors"
+                :class="color.colorName"
+                @click="newContact.color = color.colorName"></li>
+          </ul>
+          <div class="save-contact-button">
+            <input type="submit" value="Сохранить"
+                   @click="$emit('addContact', newContact), hideModals()"
+                   @click.prevent.self
+                   :disabled="required">
+          </div>
+      </div>
       </div>
     </div>
   </form>
@@ -100,12 +108,20 @@
                     :value="group.name">{{ group.name }}</option>
           </select>
         </div>
-        <div class="save-contact-button">
-          <input type="submit" value="Сохранить"
-                 @click="$emit('editContact', [editableContact, indexOfEdit]), hideModals()"
-                 @click.prevent.self
-                 :disabled="required">
-        </div>
+        <div class="modal-inputs-bottom">
+          <ul class="modal-contact-colors">
+            <li class="modal-contact-color"
+                v-for="color in colors"
+                :class="color.colorName"
+                @click="editableContact.color = color.colorName"></li>
+          </ul>
+          <div class="save-contact-button">
+            <input type="submit" value="Сохранить"
+                   @click="$emit('editContact', [editableContact, indexOfEdit]), hideModals()"
+                   @click.prevent.self
+                   :disabled="required">
+          </div>
+      </div>
       </div>
     </div>
   </form>
@@ -131,7 +147,8 @@ export default {
         email: null,
         image: '',
         isFavorite: false,
-        contactGroup: 'Без группы'
+        contactGroup: 'Без группы',
+        color: 'white'
       },
       editableContact: {},
       disabled: true,
@@ -149,6 +166,23 @@ export default {
           name: 'Сотрудники'
         }
       ],
+      colors: [
+        {
+          colorName: 'white'
+        },
+        {
+          colorName: 'red'
+        },
+        {
+          colorName: 'yellow'
+        },
+        {
+          colorName: 'blue'
+        },
+        {
+          colorName: 'gray'
+        }
+      ]
     }
   },
   computed: {
@@ -189,7 +223,6 @@ export default {
     editContactShow(editableContactInfo, index) {
       this.isEditContactShow = true;
       this.isAddContactShow = false;
-
       this.editableContact = cloneDeep(editableContactInfo);
       this.indexOfEdit = index;
     },
@@ -197,7 +230,6 @@ export default {
     hideModals() {
       this.isAddContactShow = false;
       this.isEditContactShow = false;
-
       this.clearInputs();
     },
 
@@ -349,6 +381,50 @@ export default {
           padding: 8px;
           cursor: pointer;
         }
+    }
+
+    .modal-inputs-bottom {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .modal-contact-colors {
+      display: flex;
+      align-items: center;
+    }
+
+    .modal-contact-color {
+      width: 25px;
+      height: 25px;
+      margin-right: 10px;
+      border-radius: 50%;
+      transition: .3s;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(#000, .3);
+
+      &.white {
+        background-color: white;
+      }
+
+      &.red {
+        background-color: #D32F2F;
+      }
+
+      &.yellow {
+        background-color: #FFEB3B;
+      }
+
+      &.blue {
+        background-color: #0288D1;
+      }
+
+      &.gray {
+        background-color: #9E9E9E;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
 
     .modal-close {
