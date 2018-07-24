@@ -29,7 +29,7 @@
                  v-model="newContact.name">
         </div>
         <div class="modal-input">
-          <input type="number" placeholder="Номер телефона" name="phone"
+          <input type="number" placeholder="Личный номер" name="phone"
                  v-model="newContact.phoneNumber">
         </div>
         <div class="modal-input">
@@ -75,11 +75,11 @@
                  v-model="editableContact.name">
         </div>
         <div class="modal-input">
-          <input type="number" placeholder="Номер телефона" name="phone"
+          <input type="number" placeholder="Личный номер" name="phone"
                  v-model="editableContact.phoneNumber">
         </div>
         <div class="modal-input">
-          <input type="number" placeholder="Рабочий телефон" name="workPhone"
+          <input type="number" placeholder="Рабочий номер" name="workPhone"
                  v-model="editableContact.workNumber">
         </div>
         <div class="modal-input">

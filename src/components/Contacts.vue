@@ -6,6 +6,11 @@
              :change="filteredContacts">
     </form>
 
+    <div class="info-row">
+      <p>Всего контактов: {{ contactsList.length }}</p>
+      <p v-show="filterValue">Найдено: {{ filteredContacts.length }}</p>
+    </div>
+
     <div class="contacts-list-wrapper">
       <ul class="contacts-list">
         <div v-if="contactsList.length">
@@ -28,7 +33,7 @@
 
               <div class="contact-info-row" v-show="contact.phoneNumber">
                 <div class="contact-info-left">
-                  Номер телефона:
+                  Личный:
                 </div>
                 <div class="contact-info-item">
                   <a :href="`tel:{{ contact.phoneNumber }}`">{{ contact.phoneNumber }}</a>
@@ -37,7 +42,7 @@
 
               <div class="contact-info-row" v-show="contact.workNumber">
                 <div class="contact-info-left">
-                  Рабочий номер:
+                  Рабочий:
                 </div>
                 <div class="contact-info-item">
                   <a :href="`tel:{{ contact.workNumber }}`">{{ contact.workNumber }}</a>
@@ -88,7 +93,7 @@ export default {
         isContactShowing: true
       },
       contactsList: [],
-      filterValue: ''
+      filterValue: '',
     }
   },
   mounted() {
@@ -103,11 +108,14 @@ export default {
   },
   methods: {
     saveContactsList() {
-      localStorage.setItem('contacts', JSON.stringify(this.sortContacts(this.contactsList)));
+      localStorage.setItem('contacts', JSON.stringify(this.sortContactsList(this.contactsList)));
+      this.contactsList = this.sortContactsList(this.contactsList);
     },
 
-    sortContacts(array) {
-      return array.slice().sort(function(a, b) {
+    sortContactsList(array) {
+      let favoriteConacts = [],
+          usualContacts = [];
+      let sortedArray = array.slice().sort(function(a, b) {
         if (a.name.toUpperCase() > b.name.toUpperCase()) {
           return 1;
         }
@@ -116,6 +124,17 @@ export default {
         }
         return 0;
       });
+
+      for (let i = 0; i < sortedArray.length; i++) {
+        if (sortedArray[i].isFavorite) {
+          favoriteConacts.push(sortedArray[i]);
+        } else {
+          usualContacts.push(sortedArray[i]);
+        }
+      };
+      sortedArray = favoriteConacts.concat(usualContacts);
+
+      return sortedArray
     },
 
     addContact(newContactInfo) {
@@ -140,7 +159,6 @@ export default {
       let i = this.contactsList.indexOf(contact);
 
       this.contactsList[i].isFavorite = !this.contactsList[i].isFavorite;
-
       this.saveContactsList();
     },
 
@@ -165,11 +183,16 @@ export default {
   input {
     width: 100%;
     padding: 14px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    border: none;
     outline: none;
     box-shadow: 0 0 20px rgba(#000, .25);
   }
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .contacts-list-wrapper {
@@ -181,7 +204,6 @@ export default {
     width: 100%;
     height: 420px;
     padding: 0 10px;
-    border-radius: 10px;
     box-shadow: 0 0 20px rgba(#000, .25);
     overflow-y: auto;
 }
@@ -221,10 +243,7 @@ export default {
         }
 
         .contact-info-left {
-          width: 140px;
-        }
-
-        .contact-info-item {
+          width: 70px;
         }
     }
 
