@@ -10,64 +10,7 @@
       <ul class="contacts-list">
         <div v-if="contactsList.length">
           <li class="contact"
-              v-for="contact in contactsList"
-              v-if="!isFilteredContactsShowing">
-            <div class="contact-image">
-              <img v-if="contact.image" :src="contact.image">
-              <img v-else src="../assets/no-avatar.jpg" />
-            </div>
-
-            <div class="contact-info">
-              <div class="contact-info-row" v-show="contact.name">
-                <div class="contact-info-left">
-                  Имя:
-                </div>
-                <div class="contact-info-item">
-                  {{ contact.name }}
-                </div>
-              </div>
-
-              <div class="contact-info-row" v-show="contact.phoneNumber">
-                <div class="contact-info-left">
-                  Номер телефона:
-                </div>
-                <div class="contact-info-item">
-                  {{ contact.phoneNumber }}
-                </div>
-              </div>
-
-              <div class="contact-info-row" v-show="contact.workNumber">
-                <div class="contact-info-left">
-                  Рабочий номер:
-                </div>
-                <div class="contact-info-item">
-                  {{ contact.workNumber }}
-                </div>
-              </div>
-
-
-              <div class="contact-info-row" v-show="contact.email">
-                <div class="contact-info-left">
-                  Email:
-                </div>
-                <div class="contact-info-item">
-                  {{ contact.email }}
-                </div>
-              </div>
-            </div>
-
-            <div class="favorite-button contact-button" @click="isFavoriteChanging(contact)">
-              <i :class="[contact.isFavorite ? 'fas' : 'far', 'fa-star']"></i>
-            </div>
-
-            <div class="edit-button contact-button" @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
-
-            <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
-          </li>
-          
-          <li class="contact"
-              v-for="contact in filteredContactsList"
-              v-if="isFilteredContactsShowing">
+              v-for="contact in filteredContacts">
             <div class="contact-image">
               <img v-if="contact.image" :src="contact.image">
               <img v-else src="../assets/no-avatar.jpg" />
@@ -144,9 +87,7 @@ export default {
         isContactShowing: true
       },
       contactsList: [],
-      filteredContactsList: [],
-      filterValue: '',
-      isFilteredContactsShowing: false
+      filterValue: ''
     }
   },
   mounted() {
@@ -154,26 +95,9 @@ export default {
   },
   computed: {
     filteredContacts() {
-      let filterInput = this.filterValue.toUpperCase(),
-          coincidedContacts = [],
-          filteredContacts = [];
-
-      if (filterInput) {
-        this.contactsList.filter(function(element) {
-          coincidedContacts.push(element.name.toUpperCase().indexOf(filterInput) > -1)
-        });
-
-        for (let i = 0; i < coincidedContacts.length; i++) {
-          if (coincidedContacts[i]) {
-            filteredContacts.push(this.contactsList[i]);
-          }
-        }
-
-        this.isFilteredContactsShowing = true;
-        this.filteredContactsList = filteredContacts;
-      } else {
-        this.isFilteredContactsShowing = false;
-      }
+      return this.contactsList.filter(contact => {
+        return contact.name.toUpperCase().includes(this.filterValue.toUpperCase())
+      })
     }
   },
   methods: {
