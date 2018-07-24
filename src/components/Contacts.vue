@@ -1,12 +1,14 @@
 <template>
 <div class="contact-container">
-  <!-- <div class="groups-buttons">
-    <button type="button" class="group-button">
-      Все контакты ({{ contactsList.length }})
-    </button>
+  <div class="groups-buttons">
     <button type="button" class="group-button"
-            v-for="group in groups">{{ group.name }}</button>
-  </div> -->
+            :class="{active : activeGroup == ''}"
+            @click="filterContactsByGroup('')">Все контакты</button>
+    <button type="button" class="group-button"
+            v-for="group in groups"
+            :class="{active : activeGroup == group.name}"
+            @click="filterContactsByGroup(group.name)">{{ group.name }}</button>
+  </div>
   <form class="search">
     <input type="text" placeholder="Начните вводить имя" v-model="filterValue" :change="filteredContacts">
   </form>
@@ -47,7 +49,6 @@
                 <a :href="`tel:{{ contact.workNumber }}`">{{ contact.workNumber }}</a>
               </div>
             </div>
-
 
             <div class="contact-info-row" v-show="contact.email">
               <div class="contact-info-left">
@@ -94,33 +95,38 @@ export default {
         email: null,
         image: '',
         isFavorite: false,
-        groups: null
+        contactGroup: ''
       },
       contactsList: [],
+      filterValue: '',
       groups: [
         {
-          name: 'Семья',
-          contactsCount: 0,
+          name: 'Семья'
         },
         {
-          name: 'Друзья',
-          contactsCount: 0,
+          name: 'Друзья'
         },
         {
-          name: 'Сотрудники',
-          contactsCount: 0,
+          name: 'Сотрудники'
         }
       ],
-      filterValue: '',
+      activeGroup: ''
     }
   },
   mounted() {
     this.getContacts();
   },
   computed: {
+
     filteredContacts() {
       return this.contactsList.filter(contact => {
-        return contact.name.toUpperCase().includes(this.filterValue.toUpperCase())
+        if (this.filterValue) {
+          return contact.name.toUpperCase().includes(this.filterValue.toUpperCase())
+        } else if (this.activeGroup !== '') {
+          return contact.contactGroup == this.activeGroup
+        } else {
+          return contact
+        }
       })
     }
   },
@@ -153,6 +159,10 @@ export default {
       sortedArray = favoriteConacts.concat(usualContacts);
 
       return sortedArray
+    },
+
+    filterContactsByGroup(group) {
+      this.activeGroup = group;
     },
 
     addContact(newContactInfo) {
@@ -205,6 +215,10 @@ export default {
     border: none;
     border-right: 1px solid #ccc;
     cursor: pointer;
+
+    &.active {
+      background-color: #ececec;
+    }
 
     &:last-child {
       border-right: none;
@@ -273,7 +287,13 @@ export default {
         }
 
         .contact-info-left {
-            width: 70px;
+            width: 75px;
+        }
+
+        .contact-info-item {
+          a {
+            margin-left: 3px;
+          }
         }
     }
 
@@ -321,6 +341,7 @@ export default {
   align-items: center;
   height: 50px;
   padding: 10px;
+  border-top: 1px solid #ccc;
 
   .add-contact-button {
       display: flex;

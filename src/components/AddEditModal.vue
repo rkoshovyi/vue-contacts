@@ -40,12 +40,13 @@
           <input type="text" placeholder="Email" name="email"
                  v-model="newContact.email">
         </div>
-        <!-- <div class="modal-input">
-          <select class="modal-select" name="group">
+        <div class="modal-input">
+          <select class="modal-select"
+                  v-model="newContact.contactGroup">
             <option v-for="group in groups"
                     :value="group.name">{{ group.name }}</option>
           </select>
-        </div> -->
+        </div>
         <div class="save-contact-button">
           <input type="submit" value="Сохранить"
                  @click="$emit('addContact', newContact), hideModals()"
@@ -92,12 +93,13 @@
           <input type="text" placeholder="Email" name="email"
                  v-model="editableContact.email">
         </div>
-        <!-- <div class="modal-input">
-          <select class="modal-select" name="group">
+        <div class="modal-input">
+          <select class="modal-select"
+                  v-model="editableContact.contactGroup">
             <option v-for="group in groups"
-                  :value="group.name">{{ group.name }}</option>
+                    :value="group.name">{{ group.name }}</option>
           </select>
-        </div> -->
+        </div>
         <div class="save-contact-button">
           <input type="submit" value="Сохранить"
                  @click="$emit('editContact', [editableContact, indexOfEdit]), hideModals()"
@@ -129,22 +131,22 @@ export default {
         email: null,
         image: '',
         isFavorite: false,
-        groups: null
+        contactGroup: 'Без группы'
       },
       editableContact: {},
       disabled: true,
       groups: [
         {
-          name: 'Семья',
-          contactsCount: 0,
+          name: 'Без группы'
         },
         {
-          name: 'Друзья',
-          contactsCount: 0,
+          name: 'Семья'
         },
         {
-          name: 'Сотрудники',
-          contactsCount: 0,
+          name: 'Друзья'
+        },
+        {
+          name: 'Сотрудники'
         }
       ],
     }
@@ -174,7 +176,8 @@ export default {
         workNumber: null,
         email: null,
         image: '',
-        isFavorite: false
+        isFavorite: false,
+        contactGroup: 'Без группы'
       }
     },
 
