@@ -20,7 +20,7 @@
           <div class="contact-wrapper"
                :class="contact.color">
             <div class="contact-image">
-              <img v-if="contact.image" :src="contact.image">
+              <img v-if="contact.image" :src="contact.image" @click="showBigImage(contact.image)" style="cursor: pointer">
               <img v-else src="data:image/gif;base64,/9j/4QlQaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzEzOCA3OS4xNTk4MjQsIDIwMTYvMDkvMTQtMDE6MDk6MDEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiLz4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8P3hwYWNrZXQgZW5kPSJ3Ij8+/+0ALFBob3Rvc2hvcCAzLjAAOEJJTQQlAAAAAAAQ1B2M2Y8AsgTpgAmY7PhCfv/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQsJCw0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/90ABAAg/+4ADkFkb2JlAGTAAAAAAf/AABEIAPoA+gMAEQABEQECEQH/xACEAAEAAwEBAQEBAQAAAAAAAAAABQgJBwYEAgEDAQEAAAAAAAAAAAAAAAAAAAAAEAABAwMCAwUFBQIKCwAAAAAAAQIDBAUGBxEIEiETMUFRYRQiMnGBI0JSkaEWJBUzN1NjcoKSoqM0Q3N2hZOytLXBwhEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAAABEQIRAD8AjwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/0I8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB/9GPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/SjwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/048AAAAAAAAAAAAAH9a1z3IxiK57lRGtRN1VV7kRAOq41ofqxlrIprLg1ykpplRGVlUxKOFfVJKl0aKnyA6zQ8GusNW1FndYbYq/dqa17lT59hDKgH3T8FWrUTFdHdcYqnJ3RxVlUi/5lGxP1A8HfOF7WuxtWRcRW7Qpv9pbKiGpXp/Ro9JP8IHELpZrvZKl1FebXV2msZvzUtZC+CRNu/3ZERQI0AAAAAAAAAAAAAAAB//UjwAAAAAAAAAAAAtXpJwq5fn0dNecle/EMZm2dE+Vm9bUs233ihd8CLv8T/oigaE4Jonptp3FEuP43A+4MT3r1WolTVuXffftHovL8mIiAdYAAAAEDf8AF8dyqifbskslHe6J6KiwVcLZUTfxark3avqiooFLdT+DO2VjKi66Y1y2ys6vXG656vp3r1XaGd3vR+iO3T1QDP3IMcvmKXWpsmRWye0XSkXaajqG8rkRe5yL3ORfBU6AQoAAAAAAAAAAAAAP/9WPAAAAAAAAAAP3FFJPJHDDG+aWZ6MiiYiuc5zl2RrUTqqqvcgGlvD3ww0mOwUOZ6h0TKzIZUbPa8emRHRUKL1a6Zq7o6Xx27m/MC7gAAAAAAAADlmqekmKar2V1uv1MkNwgY5LTfYmolRSvXqmy/ebv3tXov6gZCaj6cZHpfktTjmRU/K9u8lvuEaL2FXBvs2WJV/VO9q9F9Q8CAAAAAAAAAAAAH//1o8AAAAAAAAAA0A4SNEIqhsOqeUUnOxrlTEKGVnRVaqtfVu5u/ZejOnm7yA0MAAAAAAAAAAAHJNZdKbTqxiNVZqprKe8UrXz49dVaiugqUToi9yqx/c5N/XwAxhvVnuOPXa42O70z6O52qofTV1M9FRWSRqqKnXbp4ovkBGAAAAAAAAAAAD/148AAAAAAAAB0TSnA6nUjPLBikPM2nrZ0kuk7U6xUcXvzv7068qbJ6qgG3dut9HaaCitdugZS0FvhZT0dMxNmsjjRGtanyRAPtAAAAAAAAAAAADO/jQ0zjp5rVqda6dGtqnNtuSoxOnaIi+zzr18URWL0/CBQMAAAAAAAAAAAf/QjwAAAAAAAAGiPBDhzWUWW53Uw/a1ErLNa5HInRkaNmqFavqrmJ9AL9gAAAAAAAAAAAAA8LqZiUOc4HlOLSsR77rQSso12RVbUsTngcm/lI1oGGEkb4pHwysVksTlbJG5NlRyLsqL8lA/AAAAAAAAAAB//9GPAAAAAAAAAbJcM1ljsuimFMa1UluUM1xqHL951VO97V/ucqAd6AAAAAAAAAAAAAAAw+1ksseP6qZ9aoWqyCnvVVJTsXwjneszE+jXoBzQAAAAAAAAAA//0o8AAAAAAAABuLo9GyLSfTNrPhXF7S9dvN9JE536qoHRwAAAAAAAAAAAAAAMceKGNkWu2eNZ8KyW967eb7dSud+qgcBAAAAAAAAAAP/TjwAAAAAAAAG12glwbctG9OqhruZI7NBSqvrSb06p9FjA68AAAAAAAAAAAAAABi1xD17bnrVqFUNXmSK5eyqvrSQx06p9FjA4wAAAAAAAAAAf/9SPAAAAAAAAAalcF+Tx3TTW444537zi10kRrN+vs9anbMXb/adoBcIAAAAAAAAAAAAAEddrnS2W1XK8Vr+SktVLNV1T+7aOFivd+iAYMXu6TXu9Xe9VH+kXetnrZ9139+okdI79XARYAAAAAAAAAB//1Y8AAAAAAAABZThY1BjwfU+ko66dILPl0aWqte5URrJnO5qaRVXu2k93+0BrwAAAAAAAAAAAAACpfF7qDHi+nf7K0s6Nu+av9mWNFTmbQxKjp3Km+6I5eVn1UDKcAAAAAAAAAAAf/9aPAAAAAAAAAfpj3xvbJG5WPYqOjkauzmuTqioqdyoBsHw5auwan4XDT19Q39rccjjpr5Ark55WonLFVInfs9E97yduBYcAAAAAAAAAAARl4u9usFruF6u9XHRWy1wPqa2qkVGtZHGm6qqr+ieIGLGsWpNbqlnFzySbnityL7LYqJyqvY0kar2aKnT3nbq53TvUDloAAAAAAAAAAA//148AAAAAAAAAA9rp/nt+03yegyjH5+SqpHctRSvVezqIHfHDIieDk/LvA2Q0x1PxrVPHYL7j9QiTNRrLraXuT2ijn26xyN8vwuTo5AOjgAAAAAAAAP8ACpqaejp5qurnjpqWmY6SoqJXIxjGNTdXOcvRERAMs+JTiDXUOrfh+I1DmYZbpd6qtTdq3Kdi9HInf2TV+Hz7/ICowAAAAAAAAAAAAf/QjwAAAAAAAAAAB6/CM7yfT29wX/Fbk+310WySx/FDOzfdY5o99ntXy/IDUDSXigwrUOOmtl8mixPK37MdQ1L0bS1Dtu+nmcu3Xr7rtl+YFnEVFTdOqL3KB/QAAAAA8HnWpeF6b25bhll6hoN2qtNQNVH1U6+UUKLzO7u/u9QMwtauJDJtU3y2e2tfjuGtXZtrY77aq2X4qp7V2X0YnRPUCtgAAAAAAAAAAAAAP//RjwAAAAAAAAAAAAAdvwPiH1S0+bDS22/Outpi2RtmuqLVQo3fdUY5VSRn9lyAWrxrjis0rYosvwusopd0SWrtMzKhm3mkUyxKny51A61RcXGiVW1HT36utir3tqbdUuVP+QyVAPtn4rtCoWK6PMJap383Fbbgi/5lOxP1A8JfONXTWgarbJZb1fpuuyujipIfT33vc/r/AFAK5ZpxjakZCyWlxulo8NpJEVvbU6LU1ey9320qI1q+rWIvqBVa6Xa6Xyunud5uNTdLhULzT1tVK6WRyqqr1c9VXxAjwAAAAAAAAAAAAAAP/9KPAAAAAAAAAAAAABM2THb/AJJVNocfstbeqtyo1KeigknduvdujEXb6gd8x/hN1nvrI5p7NSY7C9ejrrVMY7bzWOFJnp9WgdVoeBnJJEb/AAnntspHfeSmpJqhPor3wgTK8CcnJumqLVf+FbKqJ+ft3/oDz9x4HMtia5bVm9prXIi8jaqnnpt1+bO32A5FkXC1rRj7XSpjLb7A3feW0TsqF6eUS8kq/wBwDg9xtdzs9S6ju1uqbXWR/wAZSVcL4ZE+bHoioB8IAAAAAAAAAAAAAAH/048AAAAAAAAAAAe4wbTjMtR7mlsxKyzXF7VT2qsVOSmgRdvemmX3Wp1+fkgGgWnPBtidjbT3DPq12VXNuz1tcKugoI179l2VJJfqqJ6AW8s1hsmO0UVusFpo7NQwtRrKSjhZCxEamydGIm6+qgSwAAAAAebyPEMXzCjdQZPYaG+Urk2SOrhbIreu/uPVOZi7+LVQCmOpPBfbKpk9y00ujrbVIiuTHri9ZIHr1Xlin6vZ6c/MnqgFCcpxDJcKus1lyiz1FnuES/xU7FRHt/FG/wCF7V372qoHmwAAAAAAAAAAAA//1I8AAAAAAAAAAtnoVwxXfUP2bJsvSex4arkfTxInJVXBqL17NFT3I17udU6/d8wNO8bxiw4jaqayY5aqe0WylTaKmp2o1FXxc5e9zl8VXqBPAAAAAAAAAAHjM3wDFNQ7RJZcrtMVxpnIvYTbcs8D1TbnhlT3mL8vqBlbrZw95JpPUuuVN2l8w2ok5aW9Mb78Cr8MdU1vwqvg74V+fQCvAAAAAAAAAAAA/9WPAAAAAAAAAXe4auHFMm9jz/OqNUsDHJJYrLKip7Y5q9JpEX/Vovcn3vkBpXHHHFGyKJjY4o2oyKJiI1rWtTZERE6IiIB+wAAAAAAAAAAAA+K4W+hu1FVW250sVdQVsboqukmajmSMcmytcigZT8RPD9VaZVzskxyKSqwi4S7N73PoJXr0ikX8C/dd9AKsAAAAAAAAAAH/1o8AAAAAAACznDXoi7U7Ilvd9p1/YzHpGurUd0SsnTq2nb5t8X+nTxA1riiip4ooII2QwQsbHDCxEa1jGps1rUToiIibIiAf6gAAAAAAAAAAAAAARt4tFtv9rr7LeKOOvtlzhdT1tHK3mZJG9NlRUX9F8AMbdcdI6/STL5rbs+ox25c1RjlxXrzw79Ynr+ONei+fRfEDi4AAAAAAAAD/148AAAAAAHpcPxa6ZtktmxezRdpcLzUsgiXvaxF6vkd3bNY3dy/IDbjBcMtGAYraMUskSMo7XCjXS8qI6aV3WWZ+3e57lVV/ID14AAAAAAAAAAAAAAAAByjWXTKh1Uwi449M1jLrAi1WPVzmoqw1bGrydV22a/4Xde5fQDFW4UFXaq6stlwp3UtdQTPp6ynemzmSRuVrmr8lQD5AAAAAAAAP/9CPAAAAAABoxwX6bNpbddNTLlT/ALxcFfbsdVydWwMX94lbun33e4i+SKBfQAAAAAAAAAAAAAAAAAAAMyuMrTZtjyW36g2yn5KDKP3e8IxNkZXRN3R67fzrE/NqgUoAAAAAAAA//9GPAAAAACUsdnrMgvVpsVvjWWuvFXDR0kaIq7yTvRjeieCKu6gbr4njtDiONWPGLaxGUdjooqSHb73ZtRHPXfxc7dy+qgehAAAAAAAAAAAAAAAAAAADl+suDx6hacZNjfZJJWy0zqmzrsqq2sp/tIdtvxKnL8lUDEVzXse5j2qx7FVr2OTZUVOioqL4gfkAAAAAAH//0o8AAAAALT8IWJJkOrEN3niSSkxGiluCqvd7RJ9hB9UV7nJ/VA1lAAAAAAAAAAAAAAAAAAAAAAxZ4gcSbhureYWyGFIaGrqv4StzEXokNanbbJv4Nc5zfoBxkAAAAAAH/9OPAAAAADS3ggx9KXD8tyZ8SJJeLpHQwSr8SxUUSPXZfLmnX8gLvgAAAAAAAAAAAAAAAAAAAAAZv8cWPJBkGE5RHCiJcqGot1VKni6kkSWPm+aTrt8gKJgAAAAAA//UjwAAAAA2J4W7U21aI4f02luXtddMu226zVUvL/ga0CwYAAAAAAAAAAAAAAAAAAAAAFOuNa1JV6Y2W6In2tov8O6/0dRBMx3+JGgZcAAAAAAA/9WPAAAAADbvRKmSk0h02iRNkdjtBN9ZoWyr/wBQHUQAAAAAAAAAAAAAAAAAAAAAK28WlMk+h2TSqm60dVbpk9N6yKL/AOwMhQAAAAAAf//WjwAAAAA3K0j/AJKdMv8AdSzf9jCB0IAAAAAAAAAAAAAAAAAAAAACvfFR/INnX/C//KUgGO4AAAAAAP/Z" />
             </div>
 
@@ -39,7 +39,7 @@
                   Личный:
                 </div>
                 <div class="contact-info-item">
-                  <a :href="`tel:{{ contact.phoneNumber }}`">{{ contact.phoneNumber }}</a>
+                  <a :href="`tel:${contact.phoneNumber}`">{{ contact.phoneNumber }}</a>
                 </div>
               </div>
 
@@ -48,7 +48,7 @@
                   Рабочий:
                 </div>
                 <div class="contact-info-item">
-                  <a :href="`tel:{{ contact.workNumber }}`">{{ contact.workNumber }}</a>
+                  <a :href="`tel:${contact.workNumber}`">{{ contact.workNumber }}</a>
                 </div>
               </div>
 
@@ -57,7 +57,7 @@
                   Email:
                 </div>
                 <div class="contact-info-item">
-                  <a :href="`mailto:{{ contact.email }}`">{{ contact.email }}</a>
+                  <a :href="`mailto:${contact.email}`">{{ contact.email }}</a>
                 </div>
               </div>
             </div>
@@ -72,7 +72,7 @@
 
             <div class="edit-button contact-button" @click="$emit('editContactShow', contact)"><i class="fas fa-pen"></i></div>
 
-            <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-times"></i></div>
+            <div class="delete-button contact-button" @click="deleteContact(contact)"><i class="fas fa-trash"></i></div>
           </div>
         </li>
       </div>
@@ -80,7 +80,7 @@
     </ul>
 
     <transition name="fade">
-      <div class="mini-modal-overlay" v-show="isDeleteModalShow || isContactSavedShow || isDeleteModalConfirmShow">
+      <div class="mini-modal-overlay" v-show="isDeleteModalShow || isContactSavedShow || isDeleteModalConfirmShow || isShowBigImage">
         <transition name="fade">
         <div class="mini-modal delete-contact" v-show="isDeleteModalShow">
             <p>Удалить контакт "{{ deleteContactConfirmName }}"?</p>
@@ -102,6 +102,14 @@
           <div class="mini-modal contact-saved" v-show="isContactSavedShow">
             <i class="far fa-check-circle"></i>
             Контакт сохранён
+          </div>
+        </transition>
+
+        <transition name="fade">
+          <div class="mini-modal big-photo" v-show="isShowBigImage">
+            <img :src="showBigImageContent" alt="detail image">
+
+            <div class="big-photo-close" @click="closeBigImage()"><i class="fas fa-times"></i></div>
           </div>
         </transition>
       </div>
@@ -143,7 +151,9 @@ export default {
       deleteContactConfirmIndex: '',
       deleteContactConfirmName: '',
       isDeleteModalConfirmShow: false,
-      isContactSavedShow: false
+      isContactSavedShow: false,
+      isShowBigImage: false,
+      showBigImageContent: ''
     }
   },
   mounted() {
@@ -167,6 +177,18 @@ export default {
     }
   },
   methods: {
+    showBigImage(image) {
+      this.isShowBigImage = true;
+      this.showBigImageContent = image
+    },
+
+    closeBigImage() {
+      this.isShowBigImage = false;
+      setTimeout(() => {
+        this.showBigImageContent = ''
+      }, 300)
+    },
+
     saveContactsList() {
       localStorage.setItem('contacts', JSON.stringify(this.sortContactsList(this.contactsList)));
       this.contactsList = this.sortContactsList(this.contactsList);
@@ -350,9 +372,10 @@ export default {
         flex-shrink: 0;
         width: 80px;
         height: 80px;
-        margin-right: 20px;
+        margin-right: 10px;
         border-radius: 50%;
         overflow: hidden;
+        box-shadow: 0 0 10px rgba(#000, .25);
 
         img {
             position: absolute;
@@ -412,6 +435,12 @@ export default {
         transition: 0.3s;
         opacity: 0;
 
+        i {
+          &::before {
+            line-height: 20px;
+          }
+        }
+
         &.favorite-button {
             right: 60px;
         }
@@ -425,7 +454,7 @@ export default {
         }
 
         &:hover {
-        background-color: lighten(#B2DFDB, 5);
+          background-color: lighten(#B2DFDB, 5);
         }
     }
 }
@@ -451,7 +480,6 @@ export default {
       cursor: pointer;
       border: none;
       border-radius: 2px;
-      box-shadow: 0 0 10px rgba(#000, .25);
       transition: 0.3s;
       text-transform: uppercase;
       color: #fff;
@@ -537,5 +565,46 @@ export default {
     display: flex;
     align-items: center;
     font-size: 16px;
+}
+
+.big-photo {
+  max-width: 500px;
+  padding: 0;
+
+  img {
+    max-width: 500px;
+    max-height: 600px;
+    margin-right: -1px;
+    margin-bottom: -4px;
+  }
+
+  .big-photo-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #d74444;
+    cursor: pointer;
+    transition: .3s;
+
+    i {
+      margin-right: 0;
+
+      &::before {
+        color: #fff;
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
+
+    &:hover {
+      background-color: lighten(#d74444, 5);
+    }
+  }
 }
 </style>

@@ -254,7 +254,6 @@ export default {
 
     createImage(file) {
       let fileReader = new FileReader();
-      let self = this;
 
       fileReader.onload = (e) => {
         if (this.isAddContactShow) {
@@ -293,20 +292,21 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 500px;
-    padding: 20px;
     border: 1px solid #ccc;
     background-color: #fff;
     box-shadow: 0 0 20px rgba(#000, .25);
 
     .modal-title {
       width: 100%;
-      margin-bottom: 20px;
       text-align: center;
       font-size: 18px;
+      padding: 20px;
+      background-color: #e0f2f1;
     }
 
     .modal-content {
       display: flex;
+      padding: 20px;
     }
 
     .contacts-image-wrapper {
@@ -323,6 +323,7 @@ export default {
             border-radius: 50%;
             text-align: center;
             overflow: hidden;
+            box-shadow: 0 0 10px rgba(#000, .25);
 
             img {
               position: absolute;
@@ -498,11 +499,20 @@ export default {
         justify-content: center;
         width: 20px;
         height: 20px;
+        border-radius: 50%;
+        background-color: #D32F2F;
         cursor: pointer;
         transition: 0.3s;
+        font-size: 12px;
+
+        i {
+          &::before {
+            color: #fff;
+          }
+        }
 
         &:hover {
-            color: #D32F2F;
+          background-color: rgba(#D32F2F, 5);
         }
     }
 }
