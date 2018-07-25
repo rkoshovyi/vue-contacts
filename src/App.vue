@@ -88,8 +88,15 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 500px;
+    width: 100vw;
     height: 100vh;
     margin: 0 auto;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    opacity: 0;
   }
 </style>
