@@ -219,7 +219,8 @@ export default {
         email: null,
         image: '',
         isFavorite: false,
-        contactGroup: 'Без группы'
+        contactGroup: 'Без группы',
+        color: 'white'
       }
     },
 
