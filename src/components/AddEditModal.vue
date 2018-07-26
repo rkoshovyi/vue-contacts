@@ -212,16 +212,18 @@ export default {
   },
   methods: {
     clearInputs() {
-      this.newContact = {
-        name: null,
-        phoneNumber: null,
-        workNumber: null,
-        email: null,
-        image: '',
-        isFavorite: false,
-        contactGroup: 'Без группы',
-        color: 'white'
-      }
+      setTimeout(() => {
+        this.newContact = {
+          name: null,
+          phoneNumber: null,
+          workNumber: null,
+          email: null,
+          image: '',
+          isFavorite: false,
+          contactGroup: 'Без группы',
+          color: 'white'
+        }
+      }, 300)
     },
 
     addContactShow() {

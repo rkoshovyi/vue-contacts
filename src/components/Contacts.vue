@@ -411,8 +411,8 @@ export default {
 
     .is-favorite-contact {
       position: absolute;
-      top: 4px;
-      left: 9px;
+      top: 3px;
+      left: 7px;
 
       i {
         color: #FF9800;
