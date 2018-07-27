@@ -294,6 +294,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 500px;
+    max-width: 100%;
     border: 1px solid #ccc;
     background-color: #fff;
     box-shadow: 0 0 20px rgba(#000, .25);
@@ -304,11 +305,20 @@ export default {
       font-size: 18px;
       padding: 20px;
       background-color: #e0f2f1;
+
+      @media (max-width: 500px) {
+        padding: 10px;
+      }
     }
 
     .modal-content {
       display: flex;
       padding: 20px;
+
+      @media (max-width: 500px) {
+        flex-direction: column;
+        padding: 10px;
+      }
     }
 
     .contacts-image-wrapper {
@@ -316,6 +326,10 @@ export default {
         width: 150px;
         margin-right: 15px;
         text-align: center;
+
+        @media (max-width: 500px) {
+          margin: 0 auto;
+        }
 
         .contact-image {
             position: relative;
@@ -361,10 +375,19 @@ export default {
             color: #fff;
             text-transform: uppercase;
             transition: .3s;
+
+            @media (max-width: 500px) {
+              padding: 5px 10px;
+            }
         }
     }
 
     .image-button {
+
+      @media (max-width: 500px) {
+        margin-bottom: 20px;
+      }
+
       label,
       button {
         width: 100%;
@@ -378,7 +401,6 @@ export default {
           background-color: lighten(#388E3C, 5);
         }
       }
-
 
       button {
         background-color: #D32F2F;
@@ -434,6 +456,10 @@ export default {
             &::-webkit-inner-spin-button {
               -webkit-appearance: none;
             }
+
+            @media (max-width: 500px) {
+              padding: 6px;
+            }
         }
 
         input {
@@ -445,17 +471,30 @@ export default {
         select {
           padding: 7px;
           cursor: pointer;
+
+          @media (max-width: 500px) {
+            padding: 5px 3px;
+          }
         }
     }
 
     .modal-inputs-bottom {
       display: flex;
       justify-content: space-between;
+
+      @media (max-width: 500px) {
+        flex-direction: column;
+      }
     }
 
     .modal-contact-colors {
       display: flex;
       align-items: center;
+
+      @media (max-width: 500px) {
+        justify-content: flex-end;
+        margin-bottom: 10px;
+      }
     }
 
     .modal-contact-color {
@@ -466,6 +505,10 @@ export default {
       transition: .3s;
       cursor: pointer;
       box-shadow: 0 0 10px rgba(#000, .3);
+
+      &:last-child {
+        margin-right: 0;
+      }
 
       &.white {
         background-color: white;
@@ -488,7 +531,7 @@ export default {
       }
 
       &.active {
-      box-shadow: 0 0 10px rgba(#000, 1);
+        box-shadow: 0 0 10px rgba(#000, 1);
       }
     }
 

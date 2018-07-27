@@ -118,11 +118,11 @@
     <div class="bottom-bar">
       <div class="contacts-count">
         <p v-if="filterValue">Найдено: {{ filteredContacts.length }}</p>
-        <p v-else>Всего контактов: {{ contactsList.length }}</p>
+        <p v-else>Всего: {{ contactsList.length }}</p>
       </div>
       <div class="add-contact-button"
            @click="$emit('addContactShow')">
-           <i class="fas fa-plus"></i> Добавить контакт</div>
+           <i class="fas fa-plus"></i> Добавить</div>
     </div>
   </div>
 </div>
@@ -279,12 +279,18 @@ export default {
 <style lang="scss">
 .contact-container {
     width: 500px;
+    max-width: 100%;
 }
 
 .groups-buttons {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 20px;
   box-shadow: 0 0 20px rgba(#000, .25);
+
+  @media (max-width: 500px) {
+    margin-bottom: 10px;
+  }
 
   .group-button {
     width: 25%;
@@ -296,6 +302,21 @@ export default {
     font-size: 14px;
     transition: .3s;
     color: #206962;
+
+    @media (max-width: 500px) {
+      width: 50%;
+      padding: 10px 3px;
+      border-bottom: 1px solid #e0e0e0;
+
+      &:nth-child(2) {
+        border-right: none;
+      }
+
+      &:nth-child(3),
+      &:nth-child(4) {
+        border-bottom: none;
+      }
+    }
 
     &:hover {
       background-color: #ddd;
@@ -316,12 +337,20 @@ export default {
     width: 100%;
     margin-bottom: 20px;
 
+    @media (max-width: 500px) {
+      margin-bottom: 10px;
+    }
+
     input {
         width: 100%;
         padding: 14px;
         border: none;
         outline: none;
         box-shadow: 0 0 20px rgba(#000, .25);
+
+        @media (max-width: 500px) {
+          padding: 10px;
+        }
     }
 }
 
@@ -334,6 +363,10 @@ export default {
     width: 100%;
     height: 420px;
     overflow-y: auto;
+
+    @media (max-width: 500px) {
+      height: 360px;
+    }
 }
 
 .contact-wrapper {
@@ -377,6 +410,11 @@ export default {
         overflow: hidden;
         box-shadow: 0 0 10px rgba(#000, .25);
 
+        @media (max-width: 500px) {
+          width: 40px;
+          height: 40px;
+        }
+
         img {
             position: absolute;
             top: 50%;
@@ -398,6 +436,10 @@ export default {
 
         .contact-info-left {
             width: 75px;
+
+            @media (max-width: 500px) {
+              display: none;
+            }
         }
 
         .contact-info-item {
@@ -456,6 +498,10 @@ export default {
         &:hover {
           background-color: lighten(#B2DFDB, 5);
         }
+
+        @media (max-width: 768px) {
+          opacity: 1;
+        }
     }
 }
 
@@ -471,6 +517,10 @@ export default {
   padding: 10px;
   border-top: 1px solid #ccc;
 
+  @media (max-width: 500px) {
+    padding: 5px;
+  }
+
   .add-contact-button {
       display: flex;
       align-items: center;
@@ -483,6 +533,10 @@ export default {
       transition: 0.3s;
       text-transform: uppercase;
       color: #fff;
+
+      @media (max-width: 500px) {
+        padding: 5px 10px;
+      }
 
       i {
         margin-right: 10px;
@@ -512,6 +566,8 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 400px;
+    max-width: 100%;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 20px rgba(#000, 0.25);
