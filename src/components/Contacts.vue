@@ -361,11 +361,11 @@ export default {
 
 .contacts-list {
     width: 100%;
-    height: 420px;
+    height: calc(100vh - 220px);
     overflow-y: auto;
 
     @media (max-width: 500px) {
-      height: 360px;
+    height: calc(100vh - 200px);
     }
 }
 
@@ -566,7 +566,7 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    min-width: 250px;
     max-width: 100%;
     padding: 20px;
     background-color: #fff;
@@ -620,6 +620,7 @@ export default {
 .contact-saved {
     display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 16px;
 }
 
