@@ -16,11 +16,13 @@
             </div>
             <div class="change-image">
               <div class="image-button" v-if="!newContact.image" >
-                <input type="file" @change="uploadImage" id="addUploadImage">
+                <input type="file" accept="image/*" id="addUploadImage"
+                       @change="uploadImage">
                 <label for="addUploadImage">Загрузить фото</label>
               </div>
               <div class="image-button" v-else >
-                <input type="file" @change="uploadImage" id="changeUploadImage">
+                <input type="file" accept="image/*" id="changeUploadImage"
+                       @change="uploadImage">
                 <label for="changeUploadImage">Изменить фото</label>
                 <button type="button" @click="deleteImage">Удалить фото</button>
               </div>
@@ -41,7 +43,7 @@
                      v-model="newContact.workNumber">
             </div>
             <div class="modal-input">
-              <input type="text" placeholder="Email" name="email"
+              <input type="email" placeholder="Email" name="email"
                      v-model="newContact.email">
             </div>
             <div class="modal-input">
@@ -55,8 +57,8 @@
               <ul class="modal-contact-colors">
                 <li class="modal-contact-color"
                     v-for="color in colors"
-                    :class="[color.colorName, {active : newContact.color == color.colorName}]"
-                    @click="newContact.color = color.colorName"></li>
+                    :class="[color.name, {active : newContact.color == color.name}]"
+                    @click="newContact.color = color.name"></li>
               </ul>
               <div class="save-contact-button">
                 <input type="submit" value="Сохранить"
@@ -80,11 +82,13 @@
             </div>
             <div class="change-image">
               <div class="image-button" v-if="!editableContact.image" >
-                <input type="file" @change="uploadImage" id="addUploadImage">
+                <input type="file" accept="image/*" id="addUploadImage"
+                       @change="uploadImage">
                 <label for="addUploadImage">Загрузить фото</label>
               </div>
               <div class="image-button" v-else >
-                <input type="file" @change="uploadImage" id="changeUploadImage">
+                <input type="file" accept="image/*" id="changeUploadImage"
+                       @change="uploadImage">
                 <label for="changeUploadImage">Изменить фото</label>
                 <button type="button" @click="deleteImage">Удалить фото</button>
               </div>
@@ -104,7 +108,7 @@
                      v-model="editableContact.workNumber">
             </div>
             <div class="modal-input">
-              <input type="text" placeholder="Email" name="email"
+              <input type="email" placeholder="Email" name="email"
                      v-model="editableContact.email">
             </div>
             <div class="modal-input">
@@ -118,8 +122,8 @@
               <ul class="modal-contact-colors">
                 <li class="modal-contact-color"
                     v-for="color in colors"
-                    :class="[color.colorName, {active : editableContact.color == color.colorName}]"
-                    @click="editableContact.color = color.colorName"></li>
+                    :class="[color.name, {active : editableContact.color == color.name}]"
+                    @click="editableContact.color = color.name"></li>
               </ul>
               <div class="save-contact-button">
                 <input type="submit" value="Сохранить"
@@ -176,19 +180,19 @@ export default {
       ],
       colors: [
         {
-          colorName: 'white'
+          name: 'white'
         },
         {
-          colorName: 'red'
+          name: 'red'
         },
         {
-          colorName: 'yellow'
+          name: 'yellow'
         },
         {
-          colorName: 'blue'
+          name: 'blue'
         },
         {
-          colorName: 'gray'
+          name: 'gray'
         }
       ]
     }

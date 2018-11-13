@@ -625,14 +625,17 @@ export default {
 }
 
 .big-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 500px;
+  min-height: 50px;
   padding: 0;
 
   img {
+    display: block;
     max-width: 500px;
-    max-height: 600px;
-    margin-right: -1px;
-    margin-bottom: -4px;
+    max-height: 500px;
   }
 
   .big-photo-close {
